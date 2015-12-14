@@ -379,7 +379,7 @@ int main(int argc, char* argv[])
 	build_path.erase(std::find(build_path.begin(), build_path.end(), '\"'));
 	build_path.append("\\");
 
-    toolchain_prefix = "\"" + tool_path + "\\gcc-arm-none-eabi-4.8.3-2014q1\\bin\\arm-none-eabi";
+    toolchain_prefix = "\"" + tool_path + "\\bin\\arm-none-eabi";
 
 
 	ret = copy_target_file();

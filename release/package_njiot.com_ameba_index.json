@@ -19,8 +19,8 @@
           "architecture": "ameba",
 	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-0.15.12.tar.gz",
           "archiveFileName": "ameba-0.15.12.tar.gz",
-          "checksum": "SHA-256:6bd4c98ec2684331389e746fcf47f99927695bed65089c3f9ae3361eccc0cc82",
-          "size": "2282916",
+          "checksum": "SHA-256:8d3a2517fff101c9ecdaebcbeb4626e89a5834804c872db47b5ddd6535ff0002",
+          "size": "2282912",
           "boards": [
             {"name": "Ameba 8195AM"},
             {"name": "Ameba 8711AM"},
@@ -84,8 +84,8 @@
               "host": "i686-mingw32",
               "archiveFileName": "ameba-tools-0.15.12.tar.gz",
               "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-tools-0.15.12.tar.gz",
-              "checksum": "SHA-256:c6df400b2265a7e291a6767491cc86bd7c01fadbe5981dbd21cffce8d190e006",
-              "size": "16708"
+              "checksum": "SHA-256:35f9ea124cb8e5fb850efd945ed9b3cccbad81cc622961a8164461b983387cb5",
+              "size": "16690"
               }
           ]
         }
