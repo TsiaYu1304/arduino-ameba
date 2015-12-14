@@ -1,26 +1,23 @@
 {
   "packages": [
     {
-      "name": "njiot",
-      "maintainer": "neojou",
-      "websiteURL": "http://njiot.blogspot.tw",
-      "email": "neojou@gmail.com",
+      "maintainer": "Ameba Community",
       "help": {
         "online": "http://njiot.blogspot.tw"
       },
-
+      "websiteURL": "http://github.com/neojou/arduino-ameba",
       "platforms": [
         {
+          "category": "Ameba",
           "name": "Arduino Ameba",
-          "architecture": "ameba",
-          "version": "1.0.0",
-          "category": "Contributed",
+	   "url": "https://github.com/Ameba8195/Arduino/raw/master/release/ameba-1.0.0.tar.gz",
+          "checksum": "SHA-256:9beb7abc8cd7c22f4f031daf8e58e07aa5b3fc2d6449a120c54b5c899f1012fb",
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
-	   "url": "https://github.com/Ameba8195/Arduino/raw/master/release/ameba-1.0.0.tar.gz",
+          "version": "1.0.0",
+          "architecture": "ameba",
           "archiveFileName": "ameba-1.0.0.tar.gz",
-          "checksum": "SHA-256:9beb7abc8cd7c22f4f031daf8e58e07aa5b3fc2d6449a120c54b5c899f1012fb",
           "size": "15348074",
           "boards": [
             {"name": "Ameba 8195AM"},
@@ -29,12 +26,12 @@
           ],
           "toolsDependencies": [
             {
-              "packager": "arduino",
+              "packager": "realtek",
               "name": "arm-none-eabi-gcc",
               "version": "4.8.3-2014q1"
             },
             {
-              "packager": "njiot",
+              "packager": "realtek",
               "name": "ameba_tools",
               "version": "1.0.0"
             }
