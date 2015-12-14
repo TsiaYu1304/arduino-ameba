@@ -13,12 +13,12 @@
         {
           "name": "Arduino Ameba",
           "architecture": "ameba",
-          "version": "0.15.12",
+          "version": "1.0.0",
           "category": "Contributed",
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
-	"url": "https://github.com/Ameba8195/Arduino/raw/master/release/ameba-1.0.0.tar.gz",
+	   "url": "https://github.com/Ameba8195/Arduino/raw/master/release/ameba-1.0.0.tar.gz",
           "archiveFileName": "ameba-1.0.0.tar.gz",
           "checksum": "SHA-256:9beb7abc8cd7c22f4f031daf8e58e07aa5b3fc2d6449a120c54b5c899f1012fb",
           "size": "15348074",
@@ -36,7 +36,7 @@
             {
               "packager": "njiot",
               "name": "ameba_tools",
-              "version": "0.15.12"
+              "version": "1.0.0"
             }
           ]
         }
@@ -79,7 +79,7 @@
         },
         {
           "name": "ameba_tools",
-          "version": "0.15.12",
+          "version": "1.0.0",
           "systems": [
             {
               "host": "i686-mingw32",
