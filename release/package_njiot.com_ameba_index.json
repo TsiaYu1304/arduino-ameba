@@ -11,8 +11,8 @@
       "platforms": [
         {
           "category": "Ameba",
-          "name": "Arduino Ameba",
-          "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-0.15.12.tar.gz",
+	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)"
+	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-0.15.12.tar.gz",
           "archiveFileName": "ameba-0.15.12.tar.gz",
           "checksum": "SHA-256:eb2364f1ba9a59cd1d8978d65d9ada29791e2ebcbcef414530c3843d3a23ed0e",
           "size": "2282475",
