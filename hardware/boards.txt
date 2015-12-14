@@ -2,8 +2,8 @@
 arduino_ameba.name=Arduino Ameba
 arduino_ameba.vid.0=0x2341
 arduino_ameba.pid.0=0x003d
-arduino_ameba.upload.tool=mbed
-arduino_ameba.upload.protocol=usb
+arduino_ameba.upload.tool=ameba_tools
+arduino_ameba.upload.protocol=mbed_dap
 arduino_ameba.upload.maximum_size=2499639
 arduino_ameba.upload.use_1200bps_touch=false
 arduino_ameba.upload.wait_for_upload_port=false

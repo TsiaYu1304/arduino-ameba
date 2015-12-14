@@ -5,12 +5,12 @@
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
 
 name=Arduino ARM (32-bits) Boards
-version=1.6.1
+version=1.6.6
 
 # Ameba compile variables
 # ----------------------
 
-compiler.path={runtime.ide.path}/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/
+compiler.path={runtime.tools.arm-none-eabi-gcc.path}/bin/
 compiler.c.cmd=arm-none-eabi-gcc
 #compiler.c.flags=-c -g -w -mcpu=cortex-m3 -mthumb -O2 -fno-short-enums -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP
 compiler.c.flags=-c -g -w -mcpu=cortex-m3 -mthumb -O2 -fno-short-enums -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -fno-short-enums -MMD -MP
@@ -102,11 +102,12 @@ recipe.size.regex=^(?:\.ram_image1.text|\.ram_image2.text|\.image3)\s+([0-9]+).*
 # Ameba Uploader tools
 # -------------------
 
-tools.mbed.cmd=binfiletool
-tools.mbed.cmd.windows=binfiletool.exe
-tools.mbed.path={runtime.ide.path}/hardware/tools
+tools.ameba_tools.cmd=binfiletool
+tools.ameba_tools.cmd.windows=binfiletool.exe
+tools.ameba_tools.path={runtime.tools.ameba_tools.path}
 
-tools.mbed.upload.params.verbose=
-tools.mbed.upload.params.quiet=
-tools.mbed.upload.pattern= "{path}/{cmd}" ""{path}"" ""{build.path}"" 
+tools.ameba_tools.upload.params.verbose=
+tools.ameba_tools.upload.params.quiet=
+tools.ameba_tools.upload.pattern= "{path}/{cmd}" ""{path}"" ""{build.path}"" 
+tools.ameba_tools.upload.pattern.windows= "{path}/{cmd}" ""{path}"" ""{build.path}"" 
 
