@@ -84,7 +84,7 @@
             {
               "host": "i686-mingw32",
               "archiveFileName": "ameba_tools-0.15.12.tar.gz",
-              "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba_tools-0.15.12.tar.gz",
+              "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-tools-0.15.12.tar.gz",
               "checksum": "SHA-256:c6df400b2265a7e291a6767491cc86bd7c01fadbe5981dbd21cffce8d190e006",
               "size": "16708"
             }
