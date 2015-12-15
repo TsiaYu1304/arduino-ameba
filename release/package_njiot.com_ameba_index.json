@@ -19,8 +19,8 @@
           "architecture": "ameba",
 	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-0.15.12.tar.gz",
           "archiveFileName": "ameba-0.15.12.tar.gz",
-          "checksum": "SHA-256:8d3a2517fff101c9ecdaebcbeb4626e89a5834804c872db47b5ddd6535ff0002",
-          "size": "2282912",
+          "checksum": "SHA-256:972dea90cf05f4d3eeb98b7ec31e95e57044c3aaa4034bd22984e76f3ab62ba2",
+          "size": "2270687",
           "boards": [
             {"name": "Ameba 8195AM"},
             {"name": "Ameba 8711AM"},
