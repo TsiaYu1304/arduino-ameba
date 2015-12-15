@@ -1,6 +1,6 @@
 
 
-ENTRY(Reset_Handler)
+ENTRY(InfraStart)
 
 INCLUDE "export-rom.txt"
 

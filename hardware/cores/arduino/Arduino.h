@@ -115,6 +115,8 @@ extern long random( long, long ) ;
 extern void randomSeed( uint32_t dwSeed ) ;
 extern long map( long, long, long, long, long ) ;
 
+#include "WiFi1.h"
+
 #endif
 
 //
@@ -123,6 +125,5 @@ extern long map( long, long, long, long, long ) ;
 
 #include "Thread.h"
 #include "DAC1.h"
-
 
 #endif // Arduino_h

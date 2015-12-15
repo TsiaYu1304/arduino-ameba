@@ -1,9 +1,7 @@
-#include "WiFi1.h"
 
 void setup() {
   // initialize serial and wait for the port to open:
-  Serial.begin(9600);
-  while(!Serial) ;
+  Serial.begin(38400);
 
   Serial.println("sleep 5 sec. ");
   delay(5000);

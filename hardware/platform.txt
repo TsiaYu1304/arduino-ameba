@@ -37,8 +37,7 @@ build.extra_flags=
 
 # These can be overridden in platform.local.txt
 compiler.c.extra_flags=
-#compiler.c.elf.extra_flags= -Wl,--cref -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common 
-compiler.c.elf.extra_flags= -Wl,--cref -Wl,--gc-sections  -Wl,--entry=Reset_Handler -Wl,--no-enum-size-warning
+compiler.c.elf.extra_flags= -Wl,--cref -Wl,--gc-sections  -Wl,--entry=InfraStart -Wl,--no-enum-size-warning
 compiler.cpp.extra_flags=
 compiler.ar.extra_flags=
 compiler.elf2hex.extra_flags=
