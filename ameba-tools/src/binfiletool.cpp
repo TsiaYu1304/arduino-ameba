@@ -356,7 +356,7 @@ void download_bin_file(void)
 	string file2 = "";
 	file2.push_back(disk);
 	file2.append(":\\ram_all.bin");
-	CopyFile(file1.c_str(), file2.c_str(), true);
+	CopyFile(file1.c_str(), file2.c_str(), false);
 
 }
 

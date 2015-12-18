@@ -1,7 +1,7 @@
 {
   "packages": [
     {
-      "name": "realtek",
+      "name": "njiot",
       "maintainer": "Ameba Community",
       "help": {
         "online": "http://njiot.blogspot.tw"
@@ -11,7 +11,7 @@
       "platforms": [
         {
 	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
-          "category": "Ameba",
+          "category": "Contributed",
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
@@ -28,14 +28,14 @@
           ],
           "toolsDependencies": [
             {
-              "packager": "realtek",
+              "packager": "njiot",
               "name": "arm-none-eabi-gcc",
               "version": "4.8.3-2014q1"
             },
             {
-              "packager": "realtek",
+              "packager": "njiot",
               "name": "ameba_tools",
-              "version": "1.0.0"
+              "version": "1.0.1"
             }
           ]
         }
@@ -78,14 +78,14 @@
         },
         {
           "name": "ameba_tools",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "systems": [
             {
               "host": "i686-mingw32",
               "archiveFileName": "ameba-tools-0.15.12.tar.gz",
-              "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-tools-0.15.12.tar.gz",
-              "checksum": "SHA-256:35f9ea124cb8e5fb850efd945ed9b3cccbad81cc622961a8164461b983387cb5",
-              "size": "16690"
+              "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-tools-1.0.1.tar.gz",
+              "checksum": "SHA-256:064ac8dd98c103064977d76353e7c871ddb5ce7b9ca0660346e070131dc4c703",
+              "size": "16679"
               }
           ]
         }
