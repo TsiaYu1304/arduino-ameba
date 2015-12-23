@@ -36,6 +36,7 @@ extern "C" {
 #include "diag.h"
 #include "cmsis_os.h"
 #include "rtl_lib.h"
+#include "rt_os_service.h"
 
 
 extern uint32_t SystemCoreClock;
@@ -125,5 +126,10 @@ extern long map( long, long, long, long, long ) ;
 
 #include "Thread.h"
 #include "DAC1.h"
+
+#ifdef __cplusplus
+#include "Ticker.h"
+#endif
+
 
 #endif // Arduino_h

@@ -35,7 +35,7 @@ void Ticker::ticker_init(void)
     rtw_init_sema(&this->ticker_thread_sema, 0);
 
 	tasklet.pthread = (os_pthread)(&ticker_thread);
-    tasklet.tpriority = osPriorityRealtime;
+    tasklet.tpriority = osPriorityNormal;
     tasklet.stacksize = DEFAULT_STACK_SIZE;
     tasklet.stack_pointer = &this->stack[0];
 

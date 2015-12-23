@@ -15,12 +15,12 @@
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
-          "version": "1.0.1",
+          "version": "1.0.2",
           "architecture": "ameba",
-	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-0.15.12.tar.gz",
-          "archiveFileName": "ameba-0.15.12.tar.gz",
-          "checksum": "SHA-256:b5eb0c1a783c9a6e08e3b6b91a4b9e1ec3512d51e4368739ac1116f5c059f80d",
-          "size": "2270746",
+	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.2.tar.gz",
+          "archiveFileName": "ameba-1.0.2.tar.gz",
+          "checksum": "SHA-256:b041fb05423bdb1d3a820f87d1fb4442f74ed2882a2d273f9c2b49653e5b1f82",
+          "size": "2270155",
           "boards": [
             {"name": "Ameba 8195AM"},
             {"name": "Ameba 8711AM"},

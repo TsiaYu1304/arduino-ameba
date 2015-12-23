@@ -21,60 +21,85 @@
 #include <Servo.h>
 
 #include "rt_os_service.h"
-#include "Ticker.h"
 
 
 static servo_t servos[MAX_SERVOS];                          // static array of servo structures
 
 uint8_t ServoCount = 0;                                     // the total number of attached servos
 
+static volatile int8_t Channel[_Nbr_16timers ];             // counter for the servo being pulsed for each timer (or -1 if refresh interval)
+
 // convenience macros
+#define SERVO_INDEX_TO_TIMER(_servo_nbr) ((timer16_Sequence_t)(_servo_nbr / SERVOS_PER_TIMER)) // returns the timer controlling this servo
+#define SERVO_INDEX_TO_CHANNEL(_servo_nbr) (_servo_nbr % SERVOS_PER_TIMER)       // returns the index of the servo on this timer
+#define SERVO_INDEX(_timer,_channel)  ((_timer*SERVOS_PER_TIMER) + _channel)     // macro to access servo index by timer and channel
+#define SERVO(_timer,_channel)  (servos[SERVO_INDEX(_timer,_channel)])            // macro to access servo class by timer and channel
+
+
 #define SERVO_MIN() (MIN_PULSE_WIDTH - this->min * 4)  // minimum value in uS for this servo
 #define SERVO_MAX() (MAX_PULSE_WIDTH - this->max * 4)  // maximum value in uS for this servo
 
 /************ static functions common to all instances ***********************/
 
 static uint8_t isThreadCreated = false;
-static Ticker flipper;
 
 static const int delta_time = 28;
 static osThreadDef_t g_servo_task;
 
-void servo_handler(void) 
+//NeoJou
+static uint8_t timer_id;
+
+
+void Servo_Handler(void)
 {
-	while (1) {
-		unsigned int max_count=0; 
-		for (int i=0; i<ServoCount; i++) {
-			if ( servos[i].Pin.isActive == true ) {
-				if ( servos[i].us > 0 ) {				
-					digitalWrite(servos[i].Pin.nbr, HIGH);
-					if ( servos[i].us > max_count ) max_count = servos[i].us;
-				}
-			}
-		}
+	static uint32_t last_time;
+	uint32_t cur_time;
+	uint32_t diff_time;
 
-		uint32_t start=0, current=0;
-		uint32_t spend=0;
-		start = us_ticker_read();
-		uint8_t loop = true;
-		while ( loop ) {
-			current = us_ticker_read();
-			if ( current >= start )
-				spend = current- start;
-			else 
-				spend = 0xFFFFFFFF - start + current;
-			for (int i=0; i<ServoCount; i++) {
-				if ( servos[i].Pin.isActive == true ) {
-					if ( spend >= servos[i].us - delta_time ) {				
-						digitalWrite(servos[i].Pin.nbr, LOW);
-						loop = false;
-					}
-				}
-			}
-		}
+    timer16_Sequence_t timer = _timer1;
+		
+	rtw_cancel_timer(timer_id);
+	
+    if (Channel[timer] < 0) {
+        // channel set to -1 indicated that refresh interval completed so reset the timer
+        last_time = us_ticker_read();
+    } else {
+        if (SERVO_INDEX(timer,Channel[timer]) < ServoCount && SERVO(timer,Channel[timer]).Pin.isActive == true) {
+            digitalWrite(SERVO(timer,Channel[timer]).Pin.nbr, LOW); // pulse this channel low if activated
+        }
+    }
 
-		delay( (20000-2500*ServoCount)/1000 );
-	}
+    Channel[timer]++;    // increment to the next channel
+    if( SERVO_INDEX(timer,Channel[timer]) < ServoCount && Channel[timer] < SERVOS_PER_TIMER) {
+		rtw_set_timer(timer_id, SERVO(timer,Channel[timer]).us);
+        if(SERVO(timer,Channel[timer]).Pin.isActive == true) {    // check if activated
+            digitalWrite( SERVO(timer,Channel[timer]).Pin.nbr,HIGH); // its an active channel so pulse it high
+        }
+    }
+    else {
+		cur_time = us_ticker_read();
+		diff_time = ( cur_time >= last_time )? (cur_time-last_time) : (0xFFFFFFFF-last_time+cur_time);
+		
+        // finished all channels so wait for the refresh period to expire before starting over
+        if(  diff_time + 40 < REFRESH_INTERVAL ) { // allow a few ticks to ensure the next OCR1A not missed
+            rtw_set_timer(timer_id, diff_time);
+        }
+        else {
+			rtw_set_timer(timer_id, 4);
+        }
+        Channel[timer] = -1; // this will get incremented at the end of the refresh period to start again at the first channel
+    }
+}
+
+
+static boolean isTimerActive(timer16_Sequence_t timer)
+{
+  // returns true if any servo is active on this timer
+  for(uint8_t channel=0; channel < SERVOS_PER_TIMER; channel++) {
+    if(SERVO(timer,channel).Pin.isActive == true)
+      return true;
+  }
+  return false;
 }
 
 
@@ -100,12 +125,21 @@ uint8_t Servo::attach(int pin)
 
 uint8_t Servo::attach(int pin, int min, int max)
 {
+  timer16_Sequence_t timer;
+
   if (this->servoIndex < MAX_SERVOS) {
     pinMode(pin, OUTPUT);                                   // set servo pin to output
     servos[this->servoIndex].Pin.nbr = pin;
     // todo min/max check: abs(min - MIN_PULSE_WIDTH) /4 < 128
     this->min  = (MIN_PULSE_WIDTH - min)/4; //resolution of min/max is 4 uS
     this->max  = (MAX_PULSE_WIDTH - max)/4;
+	
+    // initialize the timer if it has not already been initialized
+    timer = SERVO_INDEX_TO_TIMER(servoIndex);
+    if (isTimerActive(timer) == false) {
+      rtw_init_timer(&timer_id, (void*)Servo_Handler, NULL, "Servo_Timer");
+	  rtw_set_timer(timer_id, 1000); // start at 1ms later 
+    }
     servos[this->servoIndex].Pin.isActive = true;  // this must be set after the check for isTimerActive
   }
   return this->servoIndex;
@@ -113,17 +147,12 @@ uint8_t Servo::attach(int pin, int min, int max)
 
 void Servo::detach()
 {
-  servos[this->servoIndex].Pin.isActive = false;
+	rtw_cancel_timer(timer_id);
+    servos[this->servoIndex].Pin.isActive = false;
 }
 
 void Servo::write(int value)
 {
-	if (!isThreadCreated) {		
-		rtw_create_thread(&g_servo_task, (os_pthread)servo_handler,  NULL, osPriorityNormal, DEFAULT_STACK_SIZE);
-		//flipper.attach(servo_handler, 0.02);
-		isThreadCreated = true;
-	}
-	
   // treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds)
   if (value < MIN_PULSE_WIDTH)
   {
@@ -161,7 +190,7 @@ int Servo::readMicroseconds()
 {
   unsigned int pulsewidth;
   if (this->servoIndex != INVALID_SERVO)
-    pulsewidth = servos[this->servoIndex].us;
+    pulsewidth = servos[this->servoIndex].us + 2;
   else
     pulsewidth  = 0;
 
