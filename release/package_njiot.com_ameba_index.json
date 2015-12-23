@@ -1,7 +1,6 @@
 {
   "packages": [
     {
-      "name": "njiot",
       "maintainer": "Ameba Community",
       "help": {
         "online": "http://njiot.blogspot.tw"
@@ -11,7 +10,7 @@
       "platforms": [
         {
 	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
-          "category": "Contributed",
+          "category": "Ameba",
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
