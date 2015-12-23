@@ -1,7 +1,7 @@
 {
   "packages": [
     {
-      "name": "njiot"
+      "name": "njiot",
       "maintainer": "Ameba Community",
       "help": {
         "online": "http://njiot.blogspot.tw"
