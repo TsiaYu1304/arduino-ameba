@@ -79,14 +79,10 @@ void Servo_Handler(void)
     else {
 		cur_time = us_ticker_read();
 		diff_time = ( cur_time >= last_time )? (cur_time-last_time) : (0xFFFFFFFF-last_time+cur_time);
+		if ( diff_time >= REFRESH_INTERVAL) diff_time = REFRESH_INTERVAL-40; 
+		else if ( diff_time < 40 ) diff_time = 40;
 		
-        // finished all channels so wait for the refresh period to expire before starting over
-        if(  diff_time + 40 < REFRESH_INTERVAL ) { // allow a few ticks to ensure the next OCR1A not missed
-            rtw_set_timer(timer_id, diff_time);
-        }
-        else {
-			rtw_set_timer(timer_id, 4);
-        }
+        rtw_set_timer(timer_id, REFRESH_INTERVAL - diff_time);
         Channel[timer] = -1; // this will get incremented at the end of the refresh period to start again at the first channel
     }
 }
