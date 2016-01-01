@@ -17,8 +17,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef WiFi_Drv1_h
-#define WiFi_Drv1_h
+#ifndef WiFi_Drv_h
+#define WiFi_Drv_h
 
 #include <inttypes.h>
 
@@ -31,7 +31,7 @@
 
 #include "IPAddress.h"
 
-class WiFiDrv1
+class WiFiDrv
 {
 protected: 
 	
@@ -156,6 +156,6 @@ public:
 
 };
 
-extern WiFiDrv1 wiFiDrv1;
+extern WiFiDrv wiFiDrv;
 
 #endif

@@ -17,27 +17,35 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef WiFi1_h
-#define WiFi1_h
+#ifndef Ameba_WiFi_h
+#define Ameba_WiFi_h
 
 #include <inttypes.h>
 
-#include "wl_definitions.h"
+extern "C" {
+	#include "wl_definitions.h"
+}
 
 #include "IPAddress.h"
-#include "WiFiClient1.h"
+#include "WiFiClient.h"
+#include "WiFiServer.h"
 
 
-
-class WiFiClass1
+class WiFiClass
 {
+private:
+    static void init();
+	
 public:
     static int16_t 	_state[MAX_SOCK_NUM];
 
-    WiFiClass1();
+    WiFiClass();
 
 
-    void init();
+    /*
+     * Get firmware version
+     */
+    static char* firmwareVersion();
 
 	/* Start Wifi connection with passphrase
 	 * the most secure supported mode will be automatically selected
@@ -47,6 +55,13 @@ public:
 	 *		  must be between ASCII 32-126 (decimal).
 	 */
 	int begin(char* ssid);
+    /* Start Wifi connection with passphrase
+     * the most secure supported mode will be automatically selected
+     *
+     * param ssid: Pointer to the SSID string.
+     * param passphrase: Passphrase. Valid characters in a passphrase
+     *        must be between ASCII 32-126 (decimal).
+     */
 	int begin(char* ssid, const char *passphrase);
 
 	  /*
@@ -165,11 +180,10 @@ public:
 	 */
 	int hostByName(const char* aHostname, IPAddress& aResult);
 
-	friend class WiFiClient1;
-
-
+    friend class WiFiClient;
+    friend class WiFiServer;
 };
 
-extern WiFiClass1 WiFi1;
+extern WiFiClass WiFi;
 
 #endif

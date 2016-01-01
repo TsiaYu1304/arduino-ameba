@@ -1,5 +1,5 @@
 /*
-  WiFiServer.h - Library for Arduino Wifi shield.
+  WiFiServer.cpp - Library for Arduino Wifi shield.
   Copyright (c) 2011-2014 Arduino.  All right reserved.
 
   This library is free software; you can redistribute it and/or
@@ -17,29 +17,43 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef wifiserver_h
-#define wifiserver_h
+#include <string.h>
+
+#include "WiFi.h"
+#include "WiFiClient.h"
+#include "WiFiServer.h"
+
+WiFiServer::WiFiServer(uint16_t port)
+{
+    _port = port;
+}
+
+void WiFiServer::begin()
+{
+	DiagPrintf("WiFiServer begin(), port = %d \r\n", _port);
+	this->_server.bind(_port);
+	this->_server.listen();
+	
+}
+
+WiFiClient WiFiServer::available(byte* status)
+{
+	this->_server.accept(this->tcpSock);
+	//this->tcpSock.set_blocking(false, 15000);
+    return WiFiClient(&(this->tcpSock));
+}
 
 
-#include "Server.h"
-#include "TCPSocketServer.h"
 
-class WiFiServer1 : public Server {
-private:
-  uint16_t _port;
-  void*     pcb;
+size_t WiFiServer::write(uint8_t b)
+{
+    return write(&b, 1);
+}
 
-  TCPSocketServer _server;
-  TCPSocketConnection tcpSock;
-public:
-  WiFiServer1(uint16_t);
-  WiFiClient1 available(uint8_t* status = NULL);
-  void begin();
-  virtual size_t write(uint8_t);
-  virtual size_t write(const uint8_t *buf, size_t size);
-
-  using Print::write;
-};
-
-#endif
+size_t WiFiServer::write(const uint8_t *buffer, size_t size)
+{
+	size_t n = 0;
+	this->tcpSock.send_all((const char*)buffer,size);
+    return size;
+}
 

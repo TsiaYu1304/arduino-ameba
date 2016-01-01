@@ -1,5 +1,5 @@
-#ifndef wificlient1_h
-#define wificlient1_h
+#ifndef wificlient_h
+#define wificlient_h
 
 #include "Arduino.h"	
 #include "Print.h"
@@ -7,12 +7,12 @@
 #include "IPAddress.h"
 #include "TCPSocketConnection.h"
 
-class WiFiClient1 : public Client {
+class WiFiClient : public Client {
 
 public:
 	
-  WiFiClient1();
-  WiFiClient1(TCPSocketConnection* s);
+  WiFiClient();
+  WiFiClient(TCPSocketConnection* s);
 
   uint8_t status();
   virtual int connect(IPAddress ip, uint16_t port);
@@ -30,7 +30,7 @@ public:
 
   char* get_address(void);
 
-  friend class WiFiServer1;
+  friend class WiFiServer;
 
   using Print::write;
 

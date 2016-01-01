@@ -34,7 +34,7 @@
 #include "wifi_intfs.h"
 #include "wl_definitions.h"
 
-#include "wifi_drv1.h"
+#include "wifi_drv.h"
 
 
 // scan
@@ -70,7 +70,7 @@ static bool if_enabled = false;
 // Private Methods
 
 //
-void WiFiDrv1::getNetworkData(uint8_t *ip, uint8_t *mask, uint8_t *gwip)
+void WiFiDrv::getNetworkData(uint8_t *ip, uint8_t *mask, uint8_t *gwip)
 {
 	wl_wifi_get_network_data(ip, mask, gwip);
 }
@@ -80,13 +80,13 @@ void WiFiDrv1::getNetworkData(uint8_t *ip, uint8_t *mask, uint8_t *gwip)
 // Public Methods
 
 
-void WiFiDrv1::wifiDriverInit()
+void WiFiDrv::wifiDriverInit()
 {
 	use_dhcp = true;
 	wl_wifi_init(&padapter, &pnetif);
 }
 
-int8_t WiFiDrv1::disconnect()
+int8_t WiFiDrv::disconnect()
 {
 	wl_wifi_disconnect(padapter);
     return WL_SUCCESS;
@@ -94,15 +94,15 @@ int8_t WiFiDrv1::disconnect()
 
 
 
-int8_t WiFiDrv1::startScanNetworks()
+int8_t WiFiDrv::startScanNetworks()
 {
-	Serial.println("WiFiDrv1.startScanNetworks()");
+	//Serial.println("WiFiDrv1.startScanNetworks()");
 	wl_wifi_scan(padapter);
 	return WL_SUCCESS;
 }
 
 
-uint8_t WiFiDrv1::getScanNetworks()
+uint8_t WiFiDrv::getScanNetworks()
 {
 	uint8_t num;
 	num = wl_wifi_get_scan_networks(padapter, _networkSsid, _networkRssi, _networkEncr, WL_NETWORKS_LIST_MAXNUM);
@@ -110,7 +110,7 @@ uint8_t WiFiDrv1::getScanNetworks()
 
 }
 
-int8_t WiFiDrv1::wifiSetPassphrase(char* ssid, uint8_t ssid_len, const char *passphrase, const uint8_t passphrase_len)
+int8_t WiFiDrv::wifiSetPassphrase(char* ssid, uint8_t ssid_len, const char *passphrase, const uint8_t passphrase_len)
 {
 	wl_err_t ret = WL_SUCCESS;
 
@@ -124,56 +124,56 @@ int8_t WiFiDrv1::wifiSetPassphrase(char* ssid, uint8_t ssid_len, const char *pas
     return ret;
 }
 
-uint8_t* WiFiDrv1::getMacAddress()
+uint8_t* WiFiDrv::getMacAddress()
 {
 	wl_wifi_get_mac_address(padapter, (uint8_t*)_mac);
 
 	return _mac;
 }
 
-void WiFiDrv1::getIpAddress(IPAddress& ip)
+void WiFiDrv::getIpAddress(IPAddress& ip)
 {
 	getNetworkData(_localIp, _subnetMask, _gatewayIp);
 	ip = _localIp;
 }
 
- void WiFiDrv1::getSubnetMask(IPAddress& mask)
+ void WiFiDrv::getSubnetMask(IPAddress& mask)
  {
 	getNetworkData(_localIp, _subnetMask, _gatewayIp);
 	mask = _subnetMask;
  }
 
- void WiFiDrv1::getGatewayIP(IPAddress& ip)
+ void WiFiDrv::getGatewayIP(IPAddress& ip)
  {
 	getNetworkData(_localIp, _subnetMask, _gatewayIp);
 	ip = _gatewayIp;
  }
 
-char* WiFiDrv1::getCurrentSSID()
+char* WiFiDrv::getCurrentSSID()
 {
 	wl_wifi_get_current_ssid(padapter, _ssid);
     return _ssid;
 }
 
-uint8_t* WiFiDrv1::getCurrentBSSID()
+uint8_t* WiFiDrv::getCurrentBSSID()
 {
 	wl_wifi_get_current_bssid(padapter, _bssid);
     return _bssid;
 }
 
-int32_t WiFiDrv1::getCurrentRSSI()
+int32_t WiFiDrv::getCurrentRSSI()
 {
 	return wl_wifi_get_current_rssi(padapter);
 }
 
-uint8_t WiFiDrv1::getCurrentEncryptionType()
+uint8_t WiFiDrv::getCurrentEncryptionType()
 {
 
 	return wl_wifi_get_current_encType(padapter);
 }
 
 
-char* WiFiDrv1::getSSIDNetoworks(uint8_t networkItem)
+char* WiFiDrv::getSSIDNetoworks(uint8_t networkItem)
 {
 	if (networkItem >= WL_NETWORKS_LIST_MAXNUM)
 		return NULL;
@@ -181,7 +181,7 @@ char* WiFiDrv1::getSSIDNetoworks(uint8_t networkItem)
 	return _networkSsid[networkItem];
 }
 
-int32_t WiFiDrv1::getRSSINetoworks(uint8_t networkItem)
+int32_t WiFiDrv::getRSSINetoworks(uint8_t networkItem)
 {
 	if (networkItem >= WL_NETWORKS_LIST_MAXNUM)
 		return NULL;
@@ -190,7 +190,7 @@ int32_t WiFiDrv1::getRSSINetoworks(uint8_t networkItem)
 }
 
 
-uint8_t WiFiDrv1::getEncTypeNetowrks(uint8_t networkItem)
+uint8_t WiFiDrv::getEncTypeNetowrks(uint8_t networkItem)
 {
 	if (networkItem >= WL_NETWORKS_LIST_MAXNUM)
 		return NULL;
@@ -198,7 +198,7 @@ uint8_t WiFiDrv1::getEncTypeNetowrks(uint8_t networkItem)
 	return _networkEncr[networkItem];
 }
 
-uint8_t WiFiDrv1::getConnectionStatus()
+uint8_t WiFiDrv::getConnectionStatus()
 {
 
     return wl_wifi_get_connection_status(padapter); 
@@ -206,7 +206,7 @@ uint8_t WiFiDrv1::getConnectionStatus()
 
 
 
-int WiFiDrv1::getHostByName(const char* aHostname, IPAddress& aResult)
+int WiFiDrv::getHostByName(const char* aHostname, IPAddress& aResult)
 {
 	uint32_t  _ipAddr;
 	IPAddress dummy(0xFF,0xFF,0xFF,0xFF);
@@ -220,5 +220,5 @@ int WiFiDrv1::getHostByName(const char* aHostname, IPAddress& aResult)
 }
 
 
-WiFiDrv1 wiFiDrv1;
+WiFiDrv wiFiDrv;
 

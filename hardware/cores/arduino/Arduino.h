@@ -116,7 +116,6 @@ extern long random( long, long ) ;
 extern void randomSeed( uint32_t dwSeed ) ;
 extern long map( long, long, long, long, long ) ;
 
-#include "WiFi1.h"
 
 #endif
 

@@ -17,36 +17,35 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "wl_definitions.h"
-#include "WiFi1.h"
-#include "WiFiClient1.h"
+#include "WiFi.h"
+#include "WiFiClient.h"
 
 
 
-WiFiClient1::WiFiClient1()  : _sock(MAX_SOCK_NUM){
+WiFiClient::WiFiClient()  : _sock(MAX_SOCK_NUM){
 	_pTcpSocket = new TCPSocketConnection();
 }
 
-WiFiClient1::WiFiClient1(TCPSocketConnection* s)  
+WiFiClient::WiFiClient(TCPSocketConnection* s)  
 {	
 	_pTcpSocket = s;
 	_sock = _pTcpSocket->get_socket_fd();
-	WiFiClass1::_state[_sock] = _sock;
+	WiFiClass::_state[_sock] = _sock;
 	_readchar_set = false;
 }
 
 
 
-int WiFiClient1::connect(const char* host, uint16_t port) {
+int WiFiClient::connect(const char* host, uint16_t port) {
 	IPAddress remote_addr;
-	if (WiFi1.hostByName(host, remote_addr))
+	if (WiFi.hostByName(host, remote_addr))
 	{
 		return connect(remote_addr, port);
 	}
 	return 0;
 }
 
-int WiFiClient1::connect(IPAddress ip, uint16_t port) 
+int WiFiClient::connect(IPAddress ip, uint16_t port) 
 {
 	int ret;
 
@@ -55,7 +54,7 @@ int WiFiClient1::connect(IPAddress ip, uint16_t port)
     {
 		ret = _pTcpSocket->connect(ip.get_address(), port);
 		if ( ret != 0 ) {
-			Serial.print("WiFiClient1 : connect failed ret=");
+			Serial.print("WiFiClient : connect failed ret=");
 			Serial.println(ret);
 			return 0; // socket connect failed. 
 		}
@@ -63,12 +62,12 @@ int WiFiClient1::connect(IPAddress ip, uint16_t port)
 		
     	if (!connected())
        	{
-			Serial.println("WiFiClient1 : connect failed : connected is not true");
+			Serial.println("WiFiClient : connect failed : connected is not true");
     		return 0;
     	}
 
 		_sock = _pTcpSocket->get_socket_fd();
-		WiFiClass1::_state[_sock] = _sock;
+		WiFiClass::_state[_sock] = _sock;
 		_readchar_set = false;
 	
 		
@@ -81,7 +80,7 @@ int WiFiClient1::connect(IPAddress ip, uint16_t port)
     return 1;
 }
 
-int WiFiClient1::available() {
+int WiFiClient::available() {
 	int ret;
 
 	if (_sock == 255) return 0;
@@ -96,17 +95,17 @@ int WiFiClient1::available() {
 	}
 }
 
-size_t WiFiClient1::write(uint8_t b) {
+size_t WiFiClient::write(uint8_t b) {
 	  return write(&b, 1);
 }
 
-size_t WiFiClient1::write(const uint8_t *buf, size_t size) {
+size_t WiFiClient::write(const uint8_t *buf, size_t size) {
 
   return _pTcpSocket->send_all((char*)buf, (int)size);
 }
 
 
-int WiFiClient1::read() {
+int WiFiClient::read() {
 	uint8_t ch;
 	
 	if ( _readchar_set ) {
@@ -120,7 +119,7 @@ int WiFiClient1::read() {
 }
 
 
-int WiFiClient1::read(uint8_t* buf, size_t size) {
+int WiFiClient::read(uint8_t* buf, size_t size) {
   int _size;
   int ret;
   int n;
@@ -142,7 +141,7 @@ int WiFiClient1::read(uint8_t* buf, size_t size) {
   return (n+ret);
 }
 
-int WiFiClient1::peek() {
+int WiFiClient::peek() {
 	uint8_t b;
 	if (!available())
 		return -1;
@@ -152,23 +151,23 @@ int WiFiClient1::peek() {
 	return b;
 }
 
-void WiFiClient1::flush() {
+void WiFiClient::flush() {
   while (available())
     read();
 }
 
-void WiFiClient1::stop() {
+void WiFiClient::stop() {
 
   if (_sock == 255)
     return;
 
   _pTcpSocket->close();
-  WiFiClass1::_state[_sock] = NA_STATE;
+  WiFiClass::_state[_sock] = NA_STATE;
 
   _sock = 255;
 }
 
-uint8_t WiFiClient1::connected() {
+uint8_t WiFiClient::connected() {
 
   if (_sock == 255) {
     return 0;
@@ -177,16 +176,16 @@ uint8_t WiFiClient1::connected() {
   }
 }
 
-WiFiClient1::operator bool() {
+WiFiClient::operator bool() {
   if ( _sock == 255 ) return false;
   return _pTcpSocket->is_connected();
 }
 
 // Private Methods
-uint8_t WiFiClient1::getFirstSocket()
+uint8_t WiFiClient::getFirstSocket()
 {
     for (int i = 0; i < MAX_SOCK_NUM; i++) {
-      if (WiFiClass1::_state[i] == NA_STATE)
+      if (WiFiClass::_state[i] == NA_STATE)
       {
           return i;
       }
@@ -195,7 +194,7 @@ uint8_t WiFiClient1::getFirstSocket()
 }
 
 
-char* WiFiClient1::get_address(void)
+char* WiFiClient::get_address(void)
 {
 	return _pTcpSocket->get_address();
 }

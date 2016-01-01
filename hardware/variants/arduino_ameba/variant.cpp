@@ -34,8 +34,6 @@ analogin_t   adc3;
 
 } // extern C
 
-#include "WiFi1.h"
-
 
 extern "C" {
 
@@ -136,12 +134,6 @@ IMAGE2_DATA_SECTION
 DACClass1 DAC0;
 
 
-// WiFi
-IMAGE2_TEXT_SECTION
-void init_hal_wifi(void)
-{
-	WiFi1.init();
-}
 // ----------------------------------------------------------------------------
 
 IMAGE2_TEXT_SECTION
@@ -165,8 +157,6 @@ void init( void )
 	
 	init_hal_uart();
 	init_hal_adc();
-	init_hal_wifi();
-	//us_ticker_init();
 
 
 	ConfigDebugInfo&= (~(_DBG_GPIO_ | _DBG_UART_));
