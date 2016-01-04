@@ -73,6 +73,10 @@ public:
     */
     int receive_all(char* data, int length);
 
+	//NeoJou
+	bool available(void);
+	int peek(void);
+
 private:
     bool _is_connected;
 

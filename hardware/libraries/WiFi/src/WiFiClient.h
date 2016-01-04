@@ -36,8 +36,8 @@ public:
 
 private:
 	TCPSocketConnection* _pTcpSocket;
-	char _readchar;
-	bool _readchar_set;
+	//char _readchar;
+	//bool _readchar_set;
 	uint8_t _sock;	 
 
 	uint8_t getFirstSocket();

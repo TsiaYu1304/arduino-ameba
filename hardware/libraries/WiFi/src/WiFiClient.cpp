@@ -31,7 +31,6 @@ WiFiClient::WiFiClient(TCPSocketConnection* s)
 	_pTcpSocket = s;
 	_sock = _pTcpSocket->get_socket_fd();
 	WiFiClass::_state[_sock] = _sock;
-	_readchar_set = false;
 }
 
 
@@ -68,7 +67,6 @@ int WiFiClient::connect(IPAddress ip, uint16_t port)
 
 		_sock = _pTcpSocket->get_socket_fd();
 		WiFiClass::_state[_sock] = _sock;
-		_readchar_set = false;
 	
 		
     }
@@ -86,13 +84,7 @@ int WiFiClient::available() {
 	if (_sock == 255) return 0;
 	if (_pTcpSocket->is_connected() == false ) return 0;
 
-	ret = _pTcpSocket->receive(&_readchar,1);
-	if ( ret == 1 ) {
-		_readchar_set = true;
-		return 1;
-	} else {
-		return 0;
-	}
+	return (int)_pTcpSocket->available();
 }
 
 size_t WiFiClient::write(uint8_t b) {
@@ -100,55 +92,29 @@ size_t WiFiClient::write(uint8_t b) {
 }
 
 size_t WiFiClient::write(const uint8_t *buf, size_t size) {
-
+  int i;
+  
   return _pTcpSocket->send_all((char*)buf, (int)size);
 }
 
 
 int WiFiClient::read() {
 	uint8_t ch;
+	int ret;
 	
-	if ( _readchar_set ) {
-		ch = (uint8_t)_readchar;
-		_readchar_set = false;
-	} else {
-		read(&ch, 1);
-	}
+	ret = read(&ch, 1);
+	if ( ret <= 0 ) return -1;
+	else return (int)ch;
 	
-	return (int)ch ;
 }
 
 
 int WiFiClient::read(uint8_t* buf, size_t size) {
-  int _size;
-  int ret;
-  int n;
-
-  _size = size;
-  n = 0;
-  
-  if ( _readchar_set ) {
-  	buf[0] = _readchar;
-	_readchar_set = false;
-	buf = buf+1;
-	_size = _size - 1;
-	n = 1;
-	if ( _size ==0 ) return n;
-  }
-
-  ret = _pTcpSocket->receive((char*)buf, (int)_size);
-  if ( ret < 0 ) return ret;
-  return (n+ret);
+  return _pTcpSocket->receive((char*)buf, (int)size);
 }
 
 int WiFiClient::peek() {
-	uint8_t b;
-	if (!available())
-		return -1;
-
-	b = (uint8_t)_readchar;
-	_readchar_set = false;
-	return b;
+	return _pTcpSocket->peek();
 }
 
 void WiFiClient::flush() {

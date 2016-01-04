@@ -36,7 +36,6 @@ int TCPSocketConnection::connect(const char* host, const int port) {
         return -1;
     }
 
-	//DiagPrintf("%s : host = %s \r\n", __FUNCTION__, host);
     if (set_address(host, port) != 0) {
 		DiagPrintf("%s : set_address failed \r\n", __FUNCTION__);
         return -1;
@@ -142,4 +141,32 @@ int TCPSocketConnection::receive_all(char* data, int length) {
     }
     return readLen;
 }
+
+
+//NeoJou
+bool TCPSocketConnection::available(void)
+{
+	int ret;
+	char data;
+	
+    if ((_sock_fd < 0) || !_is_connected)
+        return false;
+
+    ret = lwip_recv(_sock_fd, &data, 1, 1); // flag = 1 => peek
+	return (ret > 0 )? true : false;
+}
+
+int TCPSocketConnection::peek(void)
+{
+	int ret;
+	char data;
+	
+    if ((_sock_fd < 0) || !_is_connected)
+        return false;
+
+    ret = lwip_recv(_sock_fd, &data, 1, 1); // flag = 1 => peek
+    if ( ret <=0 ) return -1;
+	else return (int)data;
+}
+
 
