@@ -17,7 +17,7 @@
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
-	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.6.tar.gz",
+	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.7.tar.gz",
           "archiveFileName": "ameba-1.0.7.tar.gz",
           "checksum": "SHA-256:07746e479d48bc3ff652b877ef1ffed6027b6985f7e113a8636e18b9c038cdde",
           "size": "2296694",
