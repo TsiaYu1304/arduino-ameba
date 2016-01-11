@@ -43,24 +43,19 @@
 #include "rt_Time.h"
 #include "rt_Robin.h"
 #include "rt_HAL_CM.h"
-#include "section_config.h"
 
 /*----------------------------------------------------------------------------
  *      Global Variables
  *---------------------------------------------------------------------------*/
 
-IMAGE2_DATA_SECTION
 int os_tick_irqn;
 
 /*----------------------------------------------------------------------------
  *      Local Variables
  *---------------------------------------------------------------------------*/
 
-IMAGE2_DATA_SECTION
 static volatile BIT os_lock;
-IMAGE2_DATA_SECTION
 static volatile BIT os_psh_flag;
-IMAGE2_DATA_SECTION
 static          U8  pend_flags;
 
 /*----------------------------------------------------------------------------
@@ -79,7 +74,6 @@ __RL_RTX_VER    EQU     0x450
 
 
 /*--------------------------- rt_suspend ------------------------------------*/
-IMAGE2_TEXT_SECTION
 U32 rt_suspend (void) {
   /* Suspend OS scheduler */
   U32 delta = 0xFFFF;
@@ -100,7 +94,6 @@ U32 rt_suspend (void) {
 
 
 /*--------------------------- rt_resume -------------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_resume (U32 sleep_time) {
   /* Resume OS scheduler after suspend */
   P_TCB next;
@@ -159,7 +152,6 @@ void rt_resume (U32 sleep_time) {
 
 
 /*--------------------------- rt_tsk_lock -----------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_tsk_lock (void) {
   /* Prevent task switching by locking out scheduler */
   if (os_tick_irqn < 0) {
@@ -175,7 +167,6 @@ void rt_tsk_lock (void) {
 
 
 /*--------------------------- rt_tsk_unlock ---------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_tsk_unlock (void) {
   /* Unlock scheduler and re-enable task switching */
   if (os_tick_irqn < 0) {
@@ -193,7 +184,6 @@ void rt_tsk_unlock (void) {
 
 
 /*--------------------------- rt_psh_req ------------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_psh_req (void) {
   /* Initiate a post service handling request if required. */
   if (os_lock == __FALSE) {
@@ -206,7 +196,6 @@ void rt_psh_req (void) {
 
 
 /*--------------------------- rt_pop_req ------------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_pop_req (void) {
   /* Process an ISR post service requests. */
   struct OS_XCB *p_CB;
@@ -242,7 +231,6 @@ void rt_pop_req (void) {
 
 
 /*--------------------------- os_tick_init ----------------------------------*/
-IMAGE2_TEXT_SECTION
 __weak int os_tick_init (void) {
   /* Initialize SysTick timer as system tick timer. */
   rt_systick_init ();
@@ -251,7 +239,6 @@ __weak int os_tick_init (void) {
 
 
 /*--------------------------- os_tick_irqack --------------------------------*/
-IMAGE2_TEXT_SECTION
 __weak void os_tick_irqack (void) {
   /* Acknowledge timer interrupt. */
 }
@@ -261,7 +248,6 @@ __weak void os_tick_irqack (void) {
 
 extern void sysTimerTick(void);
 
-IMAGE2_TEXT_SECTION
 void rt_systick (void) {
   /* Check for system clock update, suspend running task. */
   P_TCB next;
@@ -290,7 +276,6 @@ void rt_systick (void) {
 
 /*--------------------------- rt_stk_check ----------------------------------*/
 
-IMAGE2_TEXT_SECTION
 __weak void rt_stk_check (void) {
     /* Check for stack overflow. */
     if (os_tsk.run->task_id == 0x01) {

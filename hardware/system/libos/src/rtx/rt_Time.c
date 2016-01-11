@@ -36,14 +36,12 @@
 #include "RTX_Conf.h"
 #include "rt_Task.h"
 #include "rt_Time.h"
-#include "section_config.h"
 
 /*----------------------------------------------------------------------------
  *      Global Variables
  *---------------------------------------------------------------------------*/
 
 /* Free running system tick counter */
-IMAGE2_DATA_SECTION
 U32 os_time;
 
 
@@ -54,7 +52,6 @@ U32 os_time;
 
 /*--------------------------- rt_time_get -----------------------------------*/
 
-IMAGE2_TEXT_SECTION
 U32 rt_time_get (void) {
   /* Get system time tick */
   return (os_time);
@@ -62,7 +59,6 @@ U32 rt_time_get (void) {
 
 
 /*--------------------------- rt_dly_wait -----------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_dly_wait (U16 delay_time) {
   /* Delay task by "delay_time" */
   rt_block (delay_time, WAIT_DLY);
@@ -70,7 +66,6 @@ void rt_dly_wait (U16 delay_time) {
 
 
 /*--------------------------- rt_itv_set ------------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_itv_set (U16 interval_time) {
   /* Set interval length and define start of first interval */
   os_tsk.run->interval_time = interval_time;
@@ -79,7 +74,6 @@ void rt_itv_set (U16 interval_time) {
 
 
 /*--------------------------- rt_itv_wait -----------------------------------*/
-IMAGE2_TEXT_SECTION
 void rt_itv_wait (void) {
   /* Wait for interval end and define start of next one */
   U16 delta;
