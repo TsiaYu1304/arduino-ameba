@@ -259,7 +259,76 @@ void digital_change_dir( uint32_t ulPin, uint8_t direction)
 
 }
 
-void digital_isr( uint32_t ulPin, void* handler, void* data)
+
+void attachInterrupt(uint32_t pin, void (*callback)(void), uint32_t mode)
+{
+	digital_isr(pin, callback, NULL, mode);
+}
+
+void digital_isr( uint32_t ulPin, void* handler, void* data, int mode)
+{
+	gpio_pin_t *pGpio_pin_t;
+	gpio_t *pGpio_t;
+    u32 RegValue;
+	HAL_GPIO_PIN *pHal_gpio_pin;
+
+	if ( ulPin < 0 || ulPin > TOTAL_GPIO_PIN_NUM ) return;
+
+
+	if ( (ulPin != 3) && (ulPin != 4) && (ulPin != 8) && (ulPin != 12) && (ulPin != 13) && (ulPin != 14) && (ulPin != 16) && (ulPin != 17 ) ) {
+		DiagPrintf(" %s : pin %d can not be interrupt \r\n", __FUNCTION__, ulPin);
+		return;
+	}
+
+	/* Handle */
+	if ( g_APinDescription[ulPin].ulPinType != PIO_GPIO )
+	{
+		DiagPrintf(" %s : not GPIO pin, please do pinMode first \r\n", __FUNCTION__);
+	  	return ;
+	}
+
+
+	pGpio_pin_t = &gpio_pin_struct[ulPin];
+
+	pGpio_t = &gpio_pin_struct[ulPin].sGpio_t;
+
+	switch (mode) {
+		case LOW:
+			pGpio_t->hal_pin.pin_mode = INT_LOW;
+			break;
+		case HIGH: 
+			pGpio_t->hal_pin.pin_mode = INT_HIGH;
+			break;
+		case FALLING: 
+			pGpio_t->hal_pin.pin_mode = INT_FALLING;
+			break;
+		case RISING: 
+			pGpio_t->hal_pin.pin_mode = INT_RISING;
+			break;
+		case CHANGE:
+			DiagPrintf(" %s : not support CHANGE yet \r\n", __FUNCTION__);
+			break;
+		default: 
+			DiagPrintf(" %s : unknown mode : %d \r\n", __FUNCTION__, mode);
+			break;
+	}
+			
+			
+	//pGpio_t->hal_pin.pin_mode = INT_FALLING;
+
+
+    HAL_GPIO_Irq_Init(&(pGpio_t->hal_pin));
+    HAL_GPIO_UserRegIrq(&(pGpio_t->hal_pin), (void*)handler, (void*) data);
+	
+    HAL_GPIO_IntCtrl(&(pGpio_t->hal_pin), _TRUE);
+
+	
+    HAL_GPIO_UnMaskIrq(&(pGpio_t->hal_pin));
+
+}
+
+
+void detachInterrupt(uint32_t ulPin)
 {
 	gpio_pin_t *pGpio_pin_t;
 	gpio_t *pGpio_t;
@@ -279,16 +348,7 @@ void digital_isr( uint32_t ulPin, void* handler, void* data)
 
 	pGpio_t = &gpio_pin_struct[ulPin].sGpio_t;
 
-	pGpio_t->hal_pin.pin_mode = INT_FALLING;
-
-
-    HAL_GPIO_Irq_Init(&(pGpio_t->hal_pin));
-    HAL_GPIO_UserRegIrq(&(pGpio_t->hal_pin), (void*)handler, (void*) data);
-	
-    HAL_GPIO_IntCtrl(&(pGpio_t->hal_pin), _TRUE);
-
-	
-    HAL_GPIO_UnMaskIrq(&(pGpio_t->hal_pin));
+    HAL_GPIO_UserUnRegIrq(&(pGpio_t->hal_pin));
 
 }
 

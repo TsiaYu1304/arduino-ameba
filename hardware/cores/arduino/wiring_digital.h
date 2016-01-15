@@ -64,8 +64,11 @@ extern void digitalWrite( uint32_t dwPin, uint32_t dwVal ) ;
  */
 extern int digitalRead( uint32_t ulPin ) ;
 
+extern void attachInterrupt(uint32_t pin, void (*callback)(void), uint32_t mode);
+extern void detachInterrupt(uint32_t pin);
 
-extern void digital_isr( uint32_t ulPin, void* handler, void* data);
+
+extern void digital_isr( uint32_t ulPin, void* handler, void* data, int mode);
 
 extern u8 gpio_get_pin_num(uint32_t ulPin);
 
