@@ -40,6 +40,10 @@
 #define WL_NETWORKS_LIST_MAXNUM	50
 // Maxmium number of socket
 #define	MAX_SOCK_NUM		4
+
+// NeoJou : 1.6.5
+#define NO_SOCKET_AVAIL     255
+
 // Socket not available constant
 #define SOCK_NOT_AVAIL  255
 // Default state value for Wifi state field
