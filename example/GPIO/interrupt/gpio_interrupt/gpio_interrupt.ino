@@ -1,5 +1,5 @@
-int event_pin = 13;
-int int_pin = 17;
+int event_pin = 2;
+int int_pin = 13;
 int count=0;
 
 void test_isr(void)
@@ -13,8 +13,9 @@ void setup() {
     Serial.print("int_pin=");
     Serial.println(int_pin);
     pinMode(event_pin, OUTPUT);
-    pinMode(int_pin, INPUT_PULLUP);
-    attachInterrupt(int_pin, test_isr, FALLING);
+    pinMode(int_pin, INPUT);
+    digitalWrite(event_pin, HIGH);
+    attachInterrupt(int_pin, test_isr, RISING);
 }
 
 void loop() {
