@@ -119,17 +119,12 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
 		case OUTPUT:
 			pGpio_t->direction = PIN_OUTPUT;
 			pGpio_t->mode = PullNone;
-			//gpio_dir(pGpio_t, PIN_OUTPUT);	// Direction: Output
-			//gpio_mode(pGpio_t, PullNone); 	// No pull
-		break ;
+			break ;
 
 		case OUTPUT_OPENDRAIN:
 			pGpio_t->direction = PIN_OUTPUT;
 			pGpio_t->mode = OpenDrain;
-			//gpio_dir(pGpio_t, PIN_OUTPUT);	// Direction: Output
-			//gpio_mode(pGpio_t, OpenDrain); 	// No pull
-
-		break;
+			break;
 
 		default:
 		break ;
@@ -196,7 +191,7 @@ int digitalRead( uint32_t ulPin )
 	gpio_pin_t *pGpio_pin_t;	
 	gpio_t *pGpio_t;	
     u32 RegValue;
-	
+
 	if ( ulPin < 0 || ulPin > TOTAL_GPIO_PIN_NUM ) return -1;
 
 	/* Handle */
@@ -204,7 +199,7 @@ int digitalRead( uint32_t ulPin )
 	{
 	  return -1;
 	}
-
+	
 	pGpio_pin_t = &gpio_pin_struct[ulPin];
 
 	pGpio_t = &gpio_pin_struct[ulPin].sGpio_t;
@@ -242,6 +237,8 @@ void digital_change_dir( uint32_t ulPin, uint8_t direction)
 	gpio_pin_t *pGpio_pin_t;
 	gpio_t *pGpio_t;
     u32 RegValue;
+	PinDirection d1;
+	
 
 	if ( ulPin < 0 || ulPin > TOTAL_GPIO_PIN_NUM ) return;
 
@@ -255,7 +252,33 @@ void digital_change_dir( uint32_t ulPin, uint8_t direction)
 
 	pGpio_t = &gpio_pin_struct[ulPin].sGpio_t;
 
-	gpio_change_dir(pGpio_t, (PinDirection)direction);
+	switch ( direction )
+	{
+		case INPUT:
+			d1 = PIN_INPUT;
+			break ;
+
+		case INPUT_PULLUP:
+			d1 = PIN_INPUT;
+			break ;
+
+		case INPUT_PULLDN:
+			d1 = PIN_INPUT;
+			break ;
+
+		case OUTPUT:
+			d1 = PIN_OUTPUT;
+			break ;
+
+		case OUTPUT_OPENDRAIN:
+			d1 = PIN_OUTPUT;
+			break ;
+
+		default:
+			break ;
+	}
+
+	gpio_change_dir(pGpio_t, (PinDirection)d1);
 
 }
 

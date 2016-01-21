@@ -157,6 +157,7 @@ void init( void )
 	
 	init_hal_uart();
 	init_hal_adc();
+	us_ticker_init();
 
 
 	ConfigDebugInfo&= (~(_DBG_GPIO_ | _DBG_UART_));
