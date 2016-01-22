@@ -41,15 +41,6 @@
           ]
         },
 
-    {
-      "name": "njiot",
-      "maintainer": "Ameba Community",
-      "help": {
-        "online": "http://njiot.blogspot.tw"
-      },
-      "websiteURL": "http://github.com/neojou/arduino-ameba",
-
-      "platforms": [
         {
 	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
           "architecture": "ameba",
