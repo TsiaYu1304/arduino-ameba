@@ -8,6 +8,19 @@ written by Adafruit Industries
 
 #define MIN_INTERVAL 2000
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+#include "section_config.h"
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
+
+IMAGE2_DATA_SECTION
+static uint8_t data[5];
+
 DHT::DHT(uint8_t pin, uint8_t type, uint8_t count) {
   _pin = pin;
   _type = type;
@@ -120,6 +133,11 @@ float DHT::computeHeatIndex(float temperature, float percentHumidity, bool isFah
   return isFahrenheit ? hi : convertFtoC(hi);
 }
 
+
+IMAGE2_DATA_SECTION
+static uint32_t cycles[80];
+
+IMAGE2_TEXT_SECTION
 boolean DHT::read(bool force) {
   // Check if sensor was read less than two seconds ago and return early
   // to use last reading.
@@ -145,7 +163,6 @@ boolean DHT::read(bool force) {
   digitalWrite(_pin, LOW);
   delay(20);
 
-  uint32_t cycles[80];
   {
     // Turn off interrupts temporarily because the next sections are timing critical
     // and we don't want any interruptions.
@@ -239,26 +256,15 @@ boolean DHT::read(bool force) {
 // This is adapted from Arduino's pulseInLong function (which is only available
 // in the very latest IDE versions):
 //   https://github.com/arduino/Arduino/blob/master/hardware/arduino/avr/cores/arduino/wiring_pulse.c
+IMAGE2_TEXT_SECTION
 uint32_t DHT::expectPulse(bool level) {
-  uint32_t count = 0;
-  // On AVR platforms use direct GPIO port access as it's much faster and better
-  // for catching pulses that are 10's of microseconds in length:
-  #ifdef __AVR
-    uint8_t portState = level ? _bit : 0;
-    while ((*portInputRegister(_port) & _bit) == portState) {
-      if (count++ >= _maxcycles) {
-        return 0; // Exceeded timeout, fail.
-      }
-    }
-  // Otherwise fall back to using digitalRead (this seems to be necessary on ESP8266
-  // right now, perhaps bugs in direct port access functions?).
-  #else
-    while (digitalRead(_pin) == level) {
-      if (count++ >= _maxcycles) {
-        return 0; // Exceeded timeout, fail.
-      }
-    }
-  #endif
-
-  return count;
+	uint32_t count = 0;
+	
+	while (digitalRead(_pin) == level) {
+		if (count++ >= _maxcycles) {
+		  return 0; // Exceeded timeout, fail.
+		}
+	}
+	
+	return count;
 }

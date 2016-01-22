@@ -44,6 +44,7 @@ OUTPUT_BIN = ../../../variants/arduino_ameba
 # Libraries
 PROJECT_BASE_PATH = ..
 ARDUINO_CORE_PATH = $(PROJECT_BASE_PATH)/../../cores/arduino
+LIBAMEBA_PATH = $(PROJECT_BASE_PATH)/../libameba
 
 CHIP=ameba
 CHIP_NAME=ameba
@@ -55,6 +56,7 @@ CHIP_SERIE=ameba
 #-------------------------------------------------------------------------------
 
 vpath %.h $(PROJECT_BASE_PATH)/include
+vpath %.h $(LIBAMEBA_PATH)/include
 vpath %.c $(PROJECT_BASE_PATH)/src
 vpath %.c $(PROJECT_BASE_PATH)/src/rtx
 
@@ -62,6 +64,7 @@ VPATH+=$(PROJECT_BASE_PATH)/src
 VPATH+=$(PROJECT_BASE_PATH)/src/rtx
 
 INCLUDES = -I$(PROJECT_BASE_PATH)/include
+INCLUDES += -I$(LIBAMEBA_PATH)/include
 
 #-------------------------------------------------------------------------------
 ifdef DEBUG

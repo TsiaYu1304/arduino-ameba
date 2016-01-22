@@ -79,8 +79,6 @@ SECTIONS
     *(.wifi.ram.data*)
     *(.img2.ram.data*)
 
-     *(.text .text.* *.text .gnu.linkonce.t.*)
-
   } > BD_RAM
 
 
@@ -131,6 +129,8 @@ SECTIONS
         __sdram_image3_text_start__ = .;
 
         . = ALIGN(4);
+
+       *(.text .text.* *.text .gnu.linkonce.t.*)
 
         *(.rodata .rodata* .gnu.linkonce.r.*)
         *(.ramfunc .ramfunc.*);

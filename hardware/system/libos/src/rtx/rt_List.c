@@ -40,13 +40,18 @@
 #include "rt_Time.h"
 #include "rt_HAL_CM.h"
 
+//NeoJou
+#include "section_config.h"
+
 /*----------------------------------------------------------------------------
  *      Global Variables
  *---------------------------------------------------------------------------*/
 
 /* List head of chained ready tasks */
+IMAGE2_DATA_SECTION
 struct OS_XCB  os_rdy;
 /* List head of chained delay tasks */
+IMAGE2_DATA_SECTION
 struct OS_XCB  os_dly;
 
 
@@ -56,7 +61,7 @@ struct OS_XCB  os_dly;
 
 
 /*--------------------------- rt_put_prio -----------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_put_prio (P_XCB p_CB, P_TCB p_task) {
   /* Put task identified with "p_task" into list ordered by priority.       */
   /* "p_CB" points to head of list; list has always an element at end with  */
@@ -91,7 +96,7 @@ void rt_put_prio (P_XCB p_CB, P_TCB p_task) {
 
 
 /*--------------------------- rt_get_first ----------------------------------*/
-
+IMAGE2_TEXT_SECTION
 P_TCB rt_get_first (P_XCB p_CB) {
   /* Get task at head of list: it is the task with highest priority. */
   /* "p_CB" points to head of list. */
@@ -114,7 +119,7 @@ P_TCB rt_get_first (P_XCB p_CB) {
 
 
 /*--------------------------- rt_put_rdy_first ------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_put_rdy_first (P_TCB p_task) {
   /* Put task identified with "p_task" at the head of the ready list. The   */
   /* task must have at least a priority equal to highest priority in list.  */
@@ -125,7 +130,7 @@ void rt_put_rdy_first (P_TCB p_task) {
 
 
 /*--------------------------- rt_get_same_rdy_prio --------------------------*/
-
+IMAGE2_TEXT_SECTION
 P_TCB rt_get_same_rdy_prio (void) {
   /* Remove a task of same priority from ready list if any exists. Other-   */
   /* wise return NULL.                                                      */
@@ -141,7 +146,7 @@ P_TCB rt_get_same_rdy_prio (void) {
 
 
 /*--------------------------- rt_resort_prio --------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_resort_prio (P_TCB p_task) {
   /* Re-sort ordered lists after the priority of 'p_task' has changed.      */
   P_TCB p_CB;
@@ -166,7 +171,7 @@ res:rt_rmv_list (p_task);
 
 
 /*--------------------------- rt_put_dly ------------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_put_dly (P_TCB p_task, U16 delay) {
   /* Put a task identified with "p_task" into chained delay wait list using */
   /* a delay value of "delay".                                              */
@@ -206,7 +211,7 @@ last: p_task->p_dlnk = NULL;
 
 
 /*--------------------------- rt_dec_dly ------------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_dec_dly (void) {
   /* Decrement delta time of list head: remove tasks having a value of zero.*/
   P_TCB p_rdy;
@@ -245,7 +250,7 @@ void rt_dec_dly (void) {
 
 
 /*--------------------------- rt_rmv_list -----------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_rmv_list (P_TCB p_task) {
   /* Remove task identified with "p_task" from ready, semaphore or mailbox  */
   /* waiting list if enqueued.                                              */
@@ -273,7 +278,7 @@ void rt_rmv_list (P_TCB p_task) {
 
 
 /*--------------------------- rt_rmv_dly ------------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_rmv_dly (P_TCB p_task) {
   /* Remove task identified with "p_task" from delay list if enqueued.      */
   P_TCB p_b;
@@ -298,7 +303,7 @@ void rt_rmv_dly (P_TCB p_task) {
 
 
 /*--------------------------- rt_psq_enq ------------------------------------*/
-
+IMAGE2_TEXT_SECTION
 void rt_psq_enq (OS_ID entry, U32 arg) {
   /* Insert post service request "entry" into ps-queue. */
   U32 idx;

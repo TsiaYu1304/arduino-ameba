@@ -46,14 +46,9 @@ class DHT {
    float readHumidity(bool force=false);
    boolean read(bool force=false);
 
- private:
-  uint8_t data[5];
+ private:  
+  //uint8_t data[5];
   uint8_t _pin, _type;
-  #ifdef __AVR
-    // Use direct GPIO access on an 8-bit AVR so keep track of the port and bitmask
-    // for the digital pin connected to the DHT.  Other platforms will use digitalRead.
-    uint8_t _bit, _port;
-  #endif
   uint32_t _lastreadtime, _maxcycles;
   bool _lastresult;
 
@@ -61,15 +56,5 @@ class DHT {
 
 };
 
-class InterruptLock {
-  public:
-   InterruptLock() {
-    noInterrupts();
-   }
-   ~InterruptLock() {
-    interrupts();
-   }
-
-};
 
 #endif

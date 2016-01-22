@@ -40,10 +40,14 @@
 #include "rt_Robin.h"
 #include "rt_HAL_CM.h"
 
+//NeoJou
+#include "section_config.h"
+
 /*----------------------------------------------------------------------------
  *      Global Variables
  *---------------------------------------------------------------------------*/
 
+IMAGE2_DATA_SECTION
 struct OS_ROBIN os_robin;
 
 
@@ -52,7 +56,7 @@ struct OS_ROBIN os_robin;
  *---------------------------------------------------------------------------*/
 
 /*--------------------------- rt_init_robin ---------------------------------*/
-
+IMAGE2_TEXT_SECTION
 __weak void rt_init_robin (void) {
   /* Initialize Round Robin variables. */
   os_robin.task = NULL;
@@ -60,7 +64,7 @@ __weak void rt_init_robin (void) {
 }
 
 /*--------------------------- rt_chk_robin ----------------------------------*/
-
+IMAGE2_TEXT_SECTION
 __weak void rt_chk_robin (void) {
   /* Check if Round Robin timeout expired and switch to the next ready task.*/
   P_TCB p_new;
