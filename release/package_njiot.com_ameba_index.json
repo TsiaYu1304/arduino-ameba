@@ -13,14 +13,14 @@
         {
 	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
           "architecture": "ameba",
-          "version": "1.0.12",
+          "version": "1.0.13",
           "category": "Contributed",
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
-	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.12.tar.gz",
-          "archiveFileName": "ameba-1.0.12.tar.gz",
-          "checksum": "SHA-256:1703b2dc213c810643f55e667c0f1aa5a77107adc0a9d9b87b4b70495c853ad7",
+	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.13.tar.gz",
+          "archiveFileName": "ameba-1.0.13.tar.gz",
+          "checksum": "SHA-256:f4c7f00779174a0bfb84c0032429495082f44811495226be48fbd40d6d98fe14",
           "size": "2330675",
           "boards": [
             {"name": "Ameba 8195AM"},
@@ -41,103 +41,6 @@
             }
           ]
         },
-      
-        {
-	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
-          "architecture": "ameba",
-          "version": "1.0.11",
-          "category": "Contributed",
-          "help": {
-            "online": "http://njiot.blogspot.tw"
-          },
-	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.11.tar.gz",
-          "archiveFileName": "ameba-1.0.11.tar.gz",
-          "checksum": "SHA-256:b57b59b1b8a3b70186d376c76580647639f987dbe3cd44c2ab86f909bc807d76",
-          "size": "2328591",
-          "boards": [
-            {"name": "Ameba 8195AM"},
-            {"name": "Ameba 8711AM"},
-            {"name": "Ameba 8711AF"}
-          ],
-          
-          "toolsDependencies": [
-            {
-              "packager": "njiot",
-              "name": "arm-none-eabi-gcc",
-              "version": "4.8.3-2014q1"
-            },
-            {
-              "packager": "njiot",
-              "name": "ameba_tools",
-              "version": "1.0.1"
-            }
-          ]
-        },
-
-        {
-	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
-          "architecture": "ameba",
-          "version": "1.0.10",
-          "category": "Contributed",
-          "help": {
-            "online": "http://njiot.blogspot.tw"
-          },
-	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.10.tar.gz",
-          "archiveFileName": "ameba-1.0.10.tar.gz",
-          "checksum": "SHA-256:479d2e3978f864c09406ab92b40372dbde832915221703c70d3e475d5b8480dd",
-          "size": "2326806",
-          "boards": [
-            {"name": "Ameba 8195AM"},
-            {"name": "Ameba 8711AM"},
-            {"name": "Ameba 8711AF"}
-          ],
-          
-          "toolsDependencies": [
-            {
-              "packager": "njiot",
-              "name": "arm-none-eabi-gcc",
-              "version": "4.8.3-2014q1"
-            },
-            {
-              "packager": "njiot",
-              "name": "ameba_tools",
-              "version": "1.0.1"
-            }
-          ]
-        },
-      
-        {
-	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
-          "architecture": "ameba",
-          "version": "1.0.9",
-          "category": "Contributed",
-          "help": {
-            "online": "http://njiot.blogspot.tw"
-          },
-	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.0.9.tar.gz",
-          "archiveFileName": "ameba-1.0.9.tar.gz",
-          "checksum": "SHA-256:633d2aadff435202ad3c232c63b141eb3693eb7411d631155f989163f616ccab",
-          "size": "2326749",
-          "boards": [
-            {"name": "Ameba 8195AM"},
-            {"name": "Ameba 8711AM"},
-            {"name": "Ameba 8711AF"}
-          ],
-          
-          "toolsDependencies": [
-            {
-              "packager": "njiot",
-              "name": "arm-none-eabi-gcc",
-              "version": "4.8.3-2014q1"
-            },
-            {
-              "packager": "njiot",
-              "name": "ameba_tools",
-              "version": "1.0.1"
-            }
-          ]
-        }
-      ],
       
 
       "tools": [

@@ -302,6 +302,8 @@ __weak void rt_stk_check (void) {
     } else {
         if ((os_tsk.run->tsk_stack < (U32)os_tsk.run->stack) ||
             (os_tsk.run->stack[0] != MAGIC_WORD)) {
+            rtl_printf(" tsk_stack = 0x%x, stack=0x%x \r\n", os_tsk.run->tsk_stack, os_tsk.run->stack);
+			rtl_printf(" task_id = 0x%x \r\n", os_tsk.run->task_id);
             os_error (OS_ERR_STK_OVF);
         }
     }
