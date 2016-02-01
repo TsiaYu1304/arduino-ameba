@@ -27,9 +27,9 @@ int copy_target_file(void)
     int ret;
     string cmd;
     
-    string file1 = build_path + ".\\target.axf";
-    string file2 = build_path + ".\\target.axf.bak";
-    string file3 = build_path + ".\\target_pure.axf";
+    string file1 = build_path + "/target.axf";
+    string file2 = build_path + "/target.axf.bak";
+    string file3 = build_path + "/target_pure.axf";
     copyfile_flags_t flags = COPYFILE_ALL;
     
     ret = copyfile(file1.c_str(), file2.c_str(), NULL, flags);
