@@ -12,6 +12,7 @@
 #include <copyfile.h>
 #include <vector>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -309,14 +310,51 @@ void merge_to_ram_all_bin(void)
     outfile.close();
 }
 
+bool isFileExist(string path) {
+    bool ret = false;
+    struct stat info;
+    
+    do {
+        if (stat(path.c_str(), &info) != 0) {
+            break;
+        }
+        
+        ret = true;
+    } while (0);
+    
+    return ret;
+}
 
 void download_bin_file(void)
 {
-    copyfile_flags_t flags = COPYFILE_ALL;
+    string filepath;
+    string filepath_ram_all;
     
-    string file1 = build_path + "/ram_all.bin";
-    string file2 = "/Volumes/MBED/ram_all.bin";
-    copyfile(file1.c_str(), file2.c_str(), NULL, flags);
+    string cmd;
+    
+    do {
+        filepath = "/Volumes/MBED/mbed.htm";
+        if (!isFileExist(filepath)) {
+            cout << "ERR: Cannot access mbed disk, please re-plug again" << endl;
+            break;
+        }
+        
+        filepath_ram_all = build_path + "/ram_all.bin";
+        if (!isFileExist(filepath_ram_all)) {
+            cout << "ERR: Cannot access ram_all.bin, maybe compile error" << endl;
+            break;
+        }
+        
+        cout << "uploading..." << endl;
+        cmd = "cp " + filepath_ram_all;
+        cmd.append(" /Volumes/MBED/;sync");
+        cout << cmd << endl;
+        
+        system(cmd.c_str());
+        
+        cout << "upload finish" << endl;
+    } while (0);
+    
 }
 
 
