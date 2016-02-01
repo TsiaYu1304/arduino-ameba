@@ -69,7 +69,7 @@ void sort_mapfile()
     
     ifstream infile;
     
-    string infilestr = build_path + ".\\target.nm";
+    string infilestr = build_path + "/target.nm";
     infile.open( infilestr.c_str() );
     
     string line;
@@ -81,7 +81,7 @@ void sort_mapfile()
     
     sort(lines.begin(), lines.end());
     
-    string outfilestr = build_path + ".\\target.map";
+    string outfilestr = build_path + "/target.map";
     ofstream outfile( outfilestr.c_str(), ios::out);
     if ( !outfile)
     {
