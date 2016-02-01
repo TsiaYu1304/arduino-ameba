@@ -4,9 +4,14 @@ Arduino core for Realtek Ameba WiFi chip
 This is personal working for Realtek Ameba chip. 
 
 
-It supports Arduino's board manager on Arduino 1.6.6 
+It supports Arduino's board manager on Arduino 1.6.7 
 For the detail, can refer to 
-http://njiot.blogspot.tw/2015/12/arduino-windows-installation-by-using.html
+Windows : 
+    http://njiot.blogspot.tw/2015/12/arduino-windows-installation-by-using.html
+MAC:
+
+
+
 
 Also can refer to : 
 http://njiot.blogspot.tw/2015/07/arduino-ameba.html
