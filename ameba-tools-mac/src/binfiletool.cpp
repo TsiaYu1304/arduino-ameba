@@ -49,8 +49,8 @@ void generate_binfiles(void)
 {
     string strip_command = toolchain_prefix + "-strip " + build_path + "/target_pure.axf ";
     string make_bin1 = toolchain_prefix + "-objcopy -j .ram.start.table -j .ram_image1.text -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_1.bin ";
-    string make_bin2 = toolchain_prefix + "-objcopy.exe -j .image2.start.table -j .ram_image2.text  -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_2.bin ";
-    string make_bin3 = toolchain_prefix + "-objcopy.exe -j .image3 -j .ARM.exidx -j .sdr_data -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_3.bin ";
+    string make_bin2 = toolchain_prefix + "-objcopy -j .image2.start.table -j .ram_image2.text  -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_2.bin ";
+    string make_bin3 = toolchain_prefix + "-objcopy -j .image3 -j .ARM.exidx -j .sdr_data -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_3.bin ";
     
     system(strip_command.c_str());
     
