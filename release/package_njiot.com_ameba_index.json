@@ -51,13 +51,6 @@
            "version":"4.8.3-2014q1",
            "systems":[
               {
-                 "host":"i686-mingw32",
-                 "archiveFileName":"gcc-arm-none-eabi-4.8.3-2014q1-windows.tar.gz",
-                 "url":"http://downloads.arduino.cc/gcc-arm-none-eabi-4.8.3-2014q1-windows.tar.gz",
-                 "checksum":"SHA-256:fd8c111c861144f932728e00abd3f7d1107e186eb9cd6083a54c7236ea78b7c2",
-                 "size":"84537449"
-              },
-              {
                  "host":"x86_64-apple-darwin",
                  "url":"http://downloads.arduino.cc/gcc-arm-none-eabi-4.8.3-2014q1-mac.tar.gz",
                  "archiveFileName":"gcc-arm-none-eabi-4.8.3-2014q1-mac.tar.gz",
@@ -80,6 +73,19 @@
               }
            ]
         },
+        {
+           "name":"arm-none-eabi-gcc",
+           "version":"5.2.1-2015q4",
+           "systems":[
+              {
+                 "host":"i686-mingw32",
+                 "archiveFileName":"arm-none-eabi-gcc-5.2.1-2015q4-win32.tar.gz",
+                 "url":"https://github.com/neojou/arduino-ameba/raw/master/release/arm-none-eabi-gcc-5.2.1-2015q4-win32.tar.gz",
+                 "checksum":"SHA-256:0938e98f0fff7540e69143de11e00cb917d84912f9b60752859af81d5bd054cd",
+                 "size":"77056145"
+              }
+           ]
+        },        
         {
           "name": "ameba_tools",
           "version": "1.1.0",
