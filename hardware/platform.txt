@@ -93,6 +93,6 @@ tools.ameba_tools.path={runtime.tools.ameba_tools.path}
 
 tools.ameba_tools.upload.params.verbose= 
 tools.ameba_tools.upload.params.quiet= 
-tools.ameba_tools.upload.pattern= "{path}/{cmd}" "{path}/../../arm-none-eabi-gcc/4.8.3-2014q1/bin" "{build.path}" 
-tools.ameba_tools.upload.pattern.windows= "{path}/{cmd}" ""{path}/../../arm-none-eabi-gcc/4.8.3-2014q1"" ""{build.path}"" 
+tools.ameba_tools.upload.pattern= "{path}/{cmd}" "{path}/../../arm-none-eabi-gcc/5.2.1-2015q4/bin" "{build.path}" 
+tools.ameba_tools.upload.pattern.windows= "{path}/{cmd}" ""{path}/../../arm-none-eabi-gcc/5.2.1-2015q4"" ""{build.path}"" 
 

@@ -9,7 +9,7 @@ MEMORY
 {
   TCM (rwx) : ORIGIN = 0x1FFF0000, LENGTH = 65536
   BD_RAM (rwx)  : ORIGIN = 0x10000bc8, LENGTH = 455735
-  SDRAM_RAM (rwx)  : ORIGIN = 0x30000000, LENGTH = 2M
+  /*SDRAM_RAM (rwx)  : ORIGIN = 0x30000000, LENGTH = 2M*/
 }
 
 
@@ -78,55 +78,6 @@ SECTIONS
     *(.img2.ram.text*)
     *(.wifi.ram.data*)
     *(.img2.ram.data*)
-
-  } > BD_RAM
-
-
-
-  
-    /* .bss section which is used for uninitialized data */
-    .bss  (NOLOAD):
-    {
-        . = ALIGN(4);
-        __bss_start__ = .;
-        _sbss = . ;
-        _szero = .;
-        
-        *(COMMON)
-        *(.sdio.rom.bss*)
-        
-        . = ALIGN(4);
-        _ebss = . ;
-        _ezero = .;
-        __bss_end__ = .;
-
-    } > BD_RAM
-
-    .heap (NOLOAD):
-    {
-        __end__ = .;
-        end = __end__;
-        *(.heap*)
-        __HeapLimit = .;
-    } > BD_RAM
-
-
-    /* stack section */
-    .stack_dummy (NOLOAD):
-    {
-		*(.stack)
-    } > BD_RAM
-
-	__StackTop = ORIGIN(BD_RAM) + LENGTH(BD_RAM);
-	__StackLimit = __StackTop - SIZEOF(.stack_dummy);
-	PROVIDE(__stack = __StackTop);
-
-	/* Check if data + heap + stack exceeds RAM limit */
-	ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
-
-    .image3 :
-    {
-        __sdram_image3_text_start__ = .;
 
         . = ALIGN(4);
 
@@ -201,33 +152,58 @@ SECTIONS
 
 	KEEP(*(.jcr*))
 
-
-    } > SDRAM_RAM
+  } > BD_RAM
 
     /* .ARM.exidx is sorted, so has to go in its own output section.  */
     PROVIDE_HIDDEN (__exidx_start = .);
     .ARM.exidx :
     {
       *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-    } > SDRAM_RAM
+    } > BD_RAM
     PROVIDE_HIDDEN (__exidx_end = .);
 
 
-  .sdr_data : 
-  {
-    __sdram_data_start__ = .;
-    *(.sdram.data*)
-    __sdram_data_end__ = .;
-  } > SDRAM_RAM
-
+  
     /* .bss section which is used for uninitialized data */
-    .bss_sdram (NOLOAD) :
+    .bss  (NOLOAD):
     {
-    __bss_start__ = .;
-    *(.bss*)
-    __bss_end__ = .;
-    } > SDRAM_RAM
+        . = ALIGN(4);
+        __bss_start__ = .;
+        _sbss = . ;
+        _szero = .;
+        
+        *(COMMON)
+        *(.sdio.rom.bss*)
+        *(.bss*)
+            
+        . = ALIGN(4);
+        _ebss = . ;
+        _ezero = .;
+        __bss_end__ = .;
 
+    } > BD_RAM
+
+    .heap (NOLOAD):
+    {
+        __end__ = .;
+        end = __end__;
+        *(.heap*)
+        __HeapLimit = .;
+    } > BD_RAM
+
+
+    /* stack section */
+    .stack_dummy (NOLOAD):
+    {
+		*(.stack)
+    } > BD_RAM
+
+	__StackTop = ORIGIN(BD_RAM) + LENGTH(BD_RAM);
+	__StackLimit = __StackTop - SIZEOF(.stack_dummy);
+	PROVIDE(__stack = __StackTop);
+
+	/* Check if data + heap + stack exceeds RAM limit */
+	ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
 
     . = ALIGN(4);
     _end = . ;

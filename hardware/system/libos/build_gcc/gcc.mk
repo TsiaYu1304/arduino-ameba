@@ -18,7 +18,7 @@
 
 # Tool suffix when cross-compiling
 
-ARM_GCC_TOOLCHAIN=../../../../../../tools/arm-none-eabi-gcc/4.8.3-2014q1/bin
+ARM_GCC_TOOLCHAIN=../../../../../../tools/arm-none-eabi-gcc/5.2.1-2015q4/bin
 
 
 CROSS_COMPILE = $(ARM_GCC_TOOLCHAIN)/arm-none-eabi-

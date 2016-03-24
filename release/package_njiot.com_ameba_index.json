@@ -13,15 +13,15 @@
         {
 	   "name": "Realtek Ameba Boards (32-bits ARM Cortex-M3)",
           "architecture": "ameba",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "category": "Contributed",
           "help": {
             "online": "http://njiot.blogspot.tw"
           },
-	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.1.0.tar.gz",
-          "archiveFileName": "ameba-1.1.0.tar.gz",
-          "checksum": "SHA-256:7f72d00301d5f728c41ab3ec375603a788b3a60e509e315b220bde6708aea464",
-          "size": "2330240",
+	   "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-1.2.0.tar.gz",
+          "archiveFileName": "ameba-1.2.0.tar.gz",
+          "checksum": "SHA-256:1f0f4a27842fa5721d0001e62fd8d20a1590e6261465f2caa4fce53bbda491e3",
+          "size": "2338453",
           "boards": [
             {"name": "Ameba 8195AM"},
             {"name": "Ameba 8711AM"},
@@ -37,7 +37,7 @@
             {
               "packager": "njiot",
               "name": "ameba_tools",
-              "version": "1.1.0"
+              "version": "1.2.0"
             }
           ]
         
@@ -61,14 +61,14 @@
         },
         {
           "name": "ameba_tools",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "systems": [
             {
               "host": "i686-mingw32",
-              "archiveFileName": "ameba-tools-1.0.1.tar.gz",
-              "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-tools-1.0.1.tar.gz",
-              "checksum": "SHA-256:064ac8dd98c103064977d76353e7c871ddb5ce7b9ca0660346e070131dc4c703",
-              "size": "16679"
+              "archiveFileName": "ameba-tools-1.2.0.tar.gz",
+              "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-tools-1.2.0.tar.gz",
+              "checksum": "SHA-256:8846b159d74f3fcdfefb525a5ac06ca38faa0d230a3baaccb8ef850d7d490a41",
+              "size": "16329"
             },
             {
               "host": "x86_64-apple-darwin",

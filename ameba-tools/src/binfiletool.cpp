@@ -49,8 +49,8 @@ void generate_binfiles(void)
 	
 	string strip_command = toolchain_prefix + "-strip.exe\" " + build_path1 + ".\\target_pure.axf\" ";
     string make_bin1 = toolchain_prefix + "-objcopy.exe\" -j .ram.start.table -j .ram_image1.text -Obinary " + build_path1 + ".\\target_pure.axf\" " + build_path1 + ".\\ram_1.bin\" ";
-    string make_bin2 = toolchain_prefix + "-objcopy.exe\" -j .image2.start.table -j .ram_image2.text  -Obinary " + build_path1 + ".\\target_pure.axf\" " + build_path1 + ".\\ram_2.bin\" ";
-    string make_bin3 = toolchain_prefix + "-objcopy.exe\" -j .image3 -j .ARM.exidx -j .sdr_data -Obinary " + build_path1 + ".\\target_pure.axf\" " + build_path1 + ".\\ram_3.bin\" ";
+    string make_bin2 = toolchain_prefix + "-objcopy.exe\" -j .image2.start.table -j .ram_image2.text  -j .ARM.exidx  -Obinary " + build_path1 + ".\\target_pure.axf\" " + build_path1 + ".\\ram_2.bin\" ";
+//string make_bin3 = toolchain_prefix + "-objcopy.exe\" -j .image3 -j .sdr_data -Obinary " + build_path1 + ".\\target_pure.axf\" " + build_path1 + ".\\ram_3.bin\" ";
 
     strip_command = "\"" + strip_command + "\"";
 	//printf(strip_command.c_str());
@@ -64,8 +64,8 @@ void generate_binfiles(void)
 	system(make_bin2.c_str());
 
 
-	make_bin3 = "\"" + make_bin3 + "\"";
-	system(make_bin3.c_str());
+	//make_bin3 = "\"" + make_bin3 + "\"";
+	//system(make_bin3.c_str());
     //string make_asm = toolchain_prefix + "-objdump -d " + build_path +".\\target.axf > " + build_path + ".\\target.asm";
 
 }
@@ -231,6 +231,8 @@ void generate_ram2_bin(void)
 	infile.close();
 }
 
+
+#if 0
 void generate_ram3_bin(void)
 {
 	string infilestr = build_path + ".\\ram_3.bin";
@@ -269,6 +271,7 @@ void generate_ram3_bin(void)
 	outfile.close();
 	infile.close();
 }
+#endif //#if 0
 
 void merge_to_ram_all_bin(void)
 {
@@ -306,6 +309,7 @@ void merge_to_ram_all_bin(void)
 	}
 	infile2.close();
 
+#if 0
 	// ram_3
 	infilestr = build_path + ".\\ram_3_prepend.bin";
 	filesize = get_binfile_size( infilestr.c_str() );
@@ -320,7 +324,7 @@ void merge_to_ram_all_bin(void)
 		}
 	}
 	infile3.close();
-
+#endif
 	outfile.close();
 }
 
@@ -392,7 +396,7 @@ int main(int argc, char* argv[])
 	generate_mapfile();
 	generate_ram1_bin();
 	generate_ram2_bin();
-	generate_ram3_bin();
+	//generate_ram3_bin();
 	merge_to_ram_all_bin();
 	download_bin_file();
 
