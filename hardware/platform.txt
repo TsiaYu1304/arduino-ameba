@@ -12,13 +12,13 @@ version=1.1.0
 
 compiler.path={runtime.tools.arm-none-eabi-gcc.path}/bin/
 compiler.c.cmd=arm-none-eabi-gcc
-compiler.c.flags=-c -g -Os -mcpu=cortex-m3 -mthumb -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD -fno-short-enums -fno-common -fmessage-length=0 -fno-exceptions -fomit-frame-pointer
+compiler.c.flags=-c -g -w -mcpu=cortex-m3 -mthumb -Os -std=c++11 -fno-short-enums -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -fno-short-enums
 compiler.c.elf.cmd=arm-none-eabi-gcc
-compiler.c.elf.flags= -Os -Wl,--gc-sections -mcpu=cortex-m3 -mthumb --specs=nano.specs 
+compiler.c.elf.flags= -Os -mcpu=cortex-m3 -mthumb --specs=nano.specs 
 compiler.S.cmd=arm-none-eabi-gcc
 compiler.S.flags=-c -g -x assembler-with-cpp
 compiler.cpp.cmd=arm-none-eabi-g++
-compiler.cpp.flags=-c -g -w -Os -mcpu=cortex-m3 -mthumb -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -fno-short-enums -fno-common -fmessage-length=0 -fno-exceptions -fomit-frame-pointer -fno-rtti -MMD
+compiler.cpp.flags=-c -g -w -Os -std=gnu++11 -mcpu=cortex-m3 -mthumb -fno-short-enums -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -fno-rtti -fno-short-enums
 compiler.ar.cmd=arm-none-eabi-ar
 compiler.ar.flags=rcs
 compiler.objcopy.cmd=arm-none-eabi-objcopy
@@ -47,7 +47,7 @@ compiler.ameba.c.include6= "-I{compiler.ameba.libpath2}/include"
 
 # These can be overridden in platform.local.txt
 compiler.c.extra_flags= {compiler.ameba.c.include1} {compiler.ameba.c.include2} {compiler.ameba.c.include3} {compiler.ameba.c.include4} {compiler.ameba.c.include5} {compiler.ameba.c.include6}
-compiler.c.elf.extra_flags= -Wl,--cref -Wl,--gc-sections  -Wl,--entry=InfraStart -Wl,--no-enum-size-warning
+compiler.c.elf.extra_flags= -Wl,--cref -Wl,--gc-sections  -Wl,--entry=InfraStart -Wl,--no-enum-size-warning -Wl,--no-wchar-size-warning
 compiler.cpp.extra_flags= {compiler.ameba.c.include1} {compiler.ameba.c.include2} {compiler.ameba.c.include3} {compiler.ameba.c.include4} {compiler.ameba.c.include5} {compiler.ameba.c.include6}
 compiler.ar.extra_flags=
 compiler.elf2hex.extra_flags=
@@ -76,7 +76,9 @@ recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -m
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
 
 ## Combine gc-sections, archives, and objects
-recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} "-L{build.variant.path}/linker_scripts/gcc" "-T{build.variant.path}/{build.ldscript}" "-Wl,-Map={build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/target.axf" "-L{build.path}" -Wl,--start-group {object_files} {sys_obj_files}  -Wl,--end-group "{build.path}/{archive_file}" "{build.variant.path}/{build.variant_system_lib}" "{build.variant.path}/librtos.a" "{build.variant.path}/libtest.a" -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+#recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} "-L{build.variant.path}/linker_scripts/gcc" "-T{build.variant.path}/{build.ldscript}" "-Wl,-Map={build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/target.axf" "-L{build.path}" -Wl,--start-group {object_files} {sys_obj_files}  -Wl,--end-group "{build.path}/{archive_file}" "{build.variant.path}/{build.variant_system_lib}" "{build.variant.path}/librtos.a" -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} "-L{build.variant.path}/linker_scripts/gcc" "-T{build.variant.path}/{build.ldscript}" "-Wl,-Map={build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/target.axf" "-L{build.path}" {object_files} "{build.path}/{archive_file}" "{build.variant.path}/{build.variant_system_lib}" "{build.variant.path}/librtos.a" -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
 
 ## Compute size
 recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/target.axf"

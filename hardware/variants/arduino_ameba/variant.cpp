@@ -28,23 +28,22 @@ extern "C" {
 #include "us_ticker.h"
 #include "rt_os_service.h"
 
-analogin_t   adc1;
-analogin_t   adc2;
-analogin_t   adc3;
+//analogin_t   adc1;
+//analogin_t   adc2;
+//analogin_t   adc3;
 
 } // extern C
 
 
 extern "C" {
 
-#include "section_config.h"
+//#include "section_config.h"
 
 void __libc_init_array(void);
 
 /*
  * Pins descriptions
  */
-IMAGE2_DATA_SECTION 
 PinDescription g_APinDescription[TOTAL_GPIO_PIN_NUM]=
 {
   
@@ -79,7 +78,6 @@ void UART_Handler(void);
 } // extern C
 
 // LogUart
-IMAGE2_DATA_SECTION 
 static RingBuffer rx_buffer0;
 
 UARTClass Serial(UART_LOG_IRQ, &rx_buffer0);
@@ -88,7 +86,6 @@ void serialEvent() __attribute__((weak));
 void serialEvent() { }
 
 // IT handlers
-IMAGE2_TEXT_SECTION 
 void UART_Handler(void)
 {
   Serial.IrqHandler();
@@ -111,7 +108,6 @@ static inline void ReRegisterSerial(void)
     InterruptRegister(&UartIrqHandle); 
 }
 
-IMAGE2_TEXT_SECTION 
 void init_hal_uart(void)
 {
 	ReRegisterSerial();
@@ -119,8 +115,8 @@ void init_hal_uart(void)
 
 
 
+#if 0
 // adc
-IMAGE2_TEXT_SECTION 
 void init_hal_adc(void)
 {
     analogin_init(&adc1, AD_1);
@@ -130,13 +126,11 @@ void init_hal_adc(void)
 
 
 // DAC
-IMAGE2_DATA_SECTION
 DACClass1 DAC0;
-
+#endif
 
 // ----------------------------------------------------------------------------
 
-IMAGE2_TEXT_SECTION
 void serialEventRun(void)
 {
 
@@ -148,7 +142,6 @@ void serialEventRun(void)
 }
 
 
-IMAGE2_TEXT_SECTION
 void init( void )
 {
 
@@ -156,7 +149,7 @@ void init( void )
 	__libc_init_array();
 	
 	init_hal_uart();
-	init_hal_adc();
+	//init_hal_adc();
 
 
 	ConfigDebugInfo&= (~(_DBG_GPIO_ | _DBG_UART_));
@@ -165,7 +158,55 @@ void init( void )
 	
 }
 
+//
+// App Start
+//
+
+extern "C" {
+
+extern HAL_VECTOR_FUN  NewVectorTable[];
+
+extern  void SVC_Handler (void);
+extern  void PendSV_Handler (void);
+extern  void SysTick_Handler (void);
 
 
+static inline void VectorTableSettingForOS(
+    void *PortSVC,
+    void *PortPendSVH,
+    void *PortSysTick    
+)
+{
+    //4 Initial SVC
+    NewVectorTable[11] = 
+    (HAL_VECTOR_FUN)PortSVC;
+
+    //4 Initial Pend SVC
+    NewVectorTable[14] = 
+    (HAL_VECTOR_FUN)PortPendSVH;
+
+    //4 Initial System Tick fun
+    NewVectorTable[15] = 
+    (HAL_VECTOR_FUN)PortSysTick;    
+}
+
+
+
+// The Main App entry point
+void _AppStart(void)
+{
+    VectorTableSettingForOS((void*)SVC_Handler,
+                       (void*)PendSV_Handler,
+                       (void*)SysTick_Handler);
+    __asm (
+        "ldr   r0, =SystemInit\n"
+        "blx   r0\n"
+        "ldr   r0, =_start\n"
+        "bx    r0\n"
+    );
+
+}
+
+}
 
 
