@@ -81,8 +81,8 @@
               "host": "x86_64-apple-darwin",
               "archiveFileName": "ameba-tools-mac-1.2.0.tar.gz",
               "url": "https://github.com/neojou/arduino-ameba/raw/master/release/ameba-tools-mac-1.2.0.tar.gz",
-              "checksum": "SHA-256:8846b159d74f3fcdfefb525a5ac06ca38faa0d230a3baaccb8ef850d7d490a41",
-              "size": "53218”
+              "checksum": "SHA-256:da384b4c0f0c93cdc99a57b0c2cb754509babd2f5ca0eb6455ed50055774eba5",
+              "size": "53218"
             }
           ]
         }
