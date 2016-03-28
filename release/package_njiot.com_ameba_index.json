@@ -59,8 +59,8 @@
               },
               {
                  "host":"x86_64-apple-darwin",
-                 "url":"https://github.com/neojou/arduino-ameba/raw/master/release/gcc-arm-none-eabi-5.2.1-2015q4-mac.tar.gz",
                  "archiveFileName":"gcc-arm-none-eabi-5.2.1-2015q4-mac.tar.gz",
+                 "url":"https://github.com/neojou/arduino-ameba/raw/master/release/gcc-arm-none-eabi-5.2.1-2015q4-mac.tar.gz",
                  "checksum":"SHA-256:8ac9089aabe8543e63a9dcb6a7502bbd48dd07fe74aff19d3417aac8cf195e7f",
                  "size":"77193664"
               }
