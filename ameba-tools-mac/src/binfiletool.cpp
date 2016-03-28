@@ -50,8 +50,8 @@ void generate_binfiles(void)
 {
     string strip_command = toolchain_prefix + "-strip " + build_path + "/target_pure.axf ";
     string make_bin1 = toolchain_prefix + "-objcopy -j .ram.start.table -j .ram_image1.text -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_1.bin ";
-    string make_bin2 = toolchain_prefix + "-objcopy -j .image2.start.table -j .ram_image2.text  -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_2.bin ";
-    string make_bin3 = toolchain_prefix + "-objcopy -j .image3 -j .ARM.exidx -j .sdr_data -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_3.bin ";
+    string make_bin2 = toolchain_prefix + "-objcopy -j .image2.start.table -j .ram_image2.text  -j .ARM.exidx -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_2.bin ";
+    //string make_bin3 = toolchain_prefix + "-objcopy -j .image3 -j .ARM.exidx -j .sdr_data -Obinary " + build_path + "/target_pure.axf " + build_path + "/ram_3.bin ";
     
     system(strip_command.c_str());
     
@@ -59,7 +59,7 @@ void generate_binfiles(void)
     
     system(make_bin2.c_str());
     
-    system(make_bin3.c_str());
+    //system(make_bin3.c_str());
     
 }
 
@@ -217,6 +217,7 @@ void generate_ram2_bin(void)
     infile.close();
 }
 
+#if 0
 void generate_ram3_bin(void)
 {
     string infilestr = build_path + "/ram_3.bin";
@@ -255,6 +256,7 @@ void generate_ram3_bin(void)
     outfile.close();
     infile.close();
 }
+#endif
 
 void merge_to_ram_all_bin(void)
 {
@@ -291,7 +293,8 @@ void merge_to_ram_all_bin(void)
         }
     }
     infile2.close();
-    
+
+#if 0
     // ram_3
     infilestr = build_path + "/ram_3_prepend.bin";
     filesize = get_binfile_size( infilestr.c_str() );
@@ -306,7 +309,7 @@ void merge_to_ram_all_bin(void)
         }
     }
     infile3.close();
-    
+#endif
     outfile.close();
 }
 
@@ -385,7 +388,7 @@ int main(int argc, char* argv[])
     generate_mapfile();
     generate_ram1_bin();
     generate_ram2_bin();
-    generate_ram3_bin();
+    //generate_ram3_bin();
     merge_to_ram_all_bin();
     download_bin_file();
     
